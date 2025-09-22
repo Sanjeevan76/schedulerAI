@@ -26,18 +26,17 @@ body {
 
 /* ✅ Navbar */
 .navbar-nav .nav-link {
-	color: #fff !important;
-	background: transparent;
-	padding: 8px 18px;
-	margin: 5px;
-	border-radius: 25px;
-	font-weight: 600;
-	transition: all 0.3s ease-in-out;
-	position: relative;
-	overflow: hidden;
-	border: 2px solid transparent;
+.navbar {
+    background-color: #000 !important; /* solid black */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3); /* optional shadow */
+    z-index: 1030; /* ensures it stays above other content */
 }
-
+}
+.navbar.navbar-dark.fixed-top {
+    background-color: #000 !important; /* force solid black */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    z-index: 1030; /* ensure it stays above other content */
+}
 /* Default border glowing */
 .navbar-nav .nav-link::before {
 	content: "";
@@ -50,7 +49,7 @@ body {
 	background: linear-gradient(45deg, #00e5ff, #1976d2, #ff4081);
 	background-size: 300% 300%;
 	opacity: 0;
-	transition: opacity 0.3s;
+	transition: opacity 0.0s;
 	z-index: -1;
 }
 
@@ -220,6 +219,73 @@ footer .col-12 {
 	margin-top: 20px;
 }
 
+
+
+.container {
+  padding: 2rem;
+}
+
+.split-image-container {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  margin: 0 auto;
+}
+
+.quadrant {
+  position: absolute;
+  width: 50%;
+  height: 50%;
+  background-image: url("https://i.postimg.cc/fLt0GJbT/Gemini-Generated-Image-mow357mow357mow3.png");
+  background-size: 300px 300px;
+  transition: transform 0.3s ease;
+}
+
+.quadrant-1 {
+  top: 0;
+  left: 0;
+  background-position: top left;
+}
+
+.quadrant-2 {
+  top: 0;
+  right: 0;
+  background-position: top right;
+}
+
+.quadrant-3 {
+  bottom: 0;
+  left: 0;
+  background-position: bottom left;
+}
+
+.quadrant-4 {
+  bottom: 0;
+  right: 0;
+  background-position: bottom right;
+}
+
+.split-image-container:hover .quadrant-1 {
+  transform: translate(-10px, -10px);
+}
+
+.split-image-container:hover .quadrant-2 {
+  transform: translate(10px, -10px);
+}
+
+.split-image-container:hover .quadrant-3 {
+  transform: translate(-10px, 10px);
+}
+
+.split-image-container:hover .quadrant-4 {
+  transform: translate(10px, 10px);
+}
+
+
+
+
+
+
 /* ✅ Responsive */
 @media (max-width: 768px) {
 	.navbar-nav {
@@ -286,7 +352,19 @@ footer .col-12 {
 				</div>
 			</div>
 		</div>
-
+		<div>
+			<div class="container">
+				<div class="split-image-container">
+					<div class="quadrant quadrant-1"></div>
+					<div class="quadrant quadrant-2"></div>
+					<div class="quadrant quadrant-3"></div>
+					<div class="quadrant quadrant-4"></div>
+				</div>
+			</div>
+			<div>
+				
+			</div>
+		</div>
 		<!-- ✅ Features -->
 		<div class="container text-center my-5">
 			<h1 class="display-4">Build with ease</h1>

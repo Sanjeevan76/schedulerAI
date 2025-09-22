@@ -9,13 +9,13 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 	<script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
-	<link rel="stylesheet" type="text/css" href="static/css/aboutus.css">
+	<!-- <link rel="stylesheet" type="text/css" href="static/css/aboutus.css"> -->
 
     <style>
         body {
             padding-top: 4rem;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            {% comment %} background-color: #f8f9fa; {% endcomment %}
+            /* {% comment %} background-color: #f8f9fa; {% endcomment %} */
         }
 
         nav {
@@ -115,30 +115,159 @@
             background-color: #00408f;
         }
 
-        .step-card {
-            background: #fff;
-            border-radius: 0.75rem;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-        }
+ 
 
-        .step-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
-        }
+@import url('https://pro.fontawesome.com/releases/v6.0.0-beta1/css/all.css');
 
-        .step-card h2 {
-            font-size: 1.25rem;
-            font-weight: bold;
-            margin-bottom: 0.8rem;
-        }
+.grid-container {
+  width: min(75rem, 100%);
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));
+  gap: 2rem;
+}
 
-        .step-card p {
-            font-size: 0.95rem;
-            color: #555;
-        }
+
+
+
+.card {
+  --grad: red, blue;
+  padding: 2.5rem;
+  background-image: linear-gradient(to bottom left, #e0e4e5, #f2f6f9);
+  border-radius: 2rem;
+  gap: 1.5rem;
+  display: grid;
+  grid-template: 'title icon' 'content1 content1' 'bar bar' / 1fr auto;
+  font-family: system-ui, sans-serif;
+  color: #444447;
+  box-shadow:
+    inset -2px 2px hsl(0 0 100% / 1),
+    -20px 20px 40px hsl(0 0 0 / .25);
+
+  /* put transition on the base so it animates on hover-in and hover-out */
+  transition: transform 300ms ease, box-shadow 300ms ease, filter 300ms ease;
+  transform-origin: center;
+}
+
+/* flat selectors for nested rules */
+.card .title {
+  font-size: 1.5rem;
+  grid-area: title;
+  align-self: end;
+  text-transform: uppercase;
+  font-weight: 500;
+  word-break: break-all;
+}
+
+.card .icon {
+  grid-area: icon;
+  font-size: 3rem;
+}
+
+/* background-clip needs the -webkit prefix for many browsers */
+.card .icon > i {
+  color: transparent;
+  background: linear-gradient(to right, var(--grad));
+  -webkit-background-clip: text;
+  background-clip: text;
+  display: inline-block;
+  /* allow animating background-position if desired */
+  background-size: 200% 100%;
+  background-position: 0% 50%;
+  transition: background-position 500ms ease;
+}
+
+.card .content1 {
+  grid-area: content1;
+}
+.card .content1 > *:first-child { margin-top: 0; }
+.card .content1 > *:last-child  { margin-bottom: 0; }
+
+.card::after {
+  content1: "";
+  grid-area: bar;
+  height: 2px;
+  background-image: linear-gradient(90deg, var(--grad));
+  background-size: 200% 100%;
+  background-position: 0% 0%;
+  transition: background-position 600ms ease;
+  /* uncomment if you want the bar to stretch past padding */
+  /* margin-inline: -1.5rem; */
+}
+
+/* Hover effect: lift + stronger shadow + animate gradients */
+.card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow:
+    inset -2px 2px hsl(0 0 100% / 1),
+    -30px 30px 60px hsl(0 0 0 / .32);
+  filter: saturate(1.03);
+}
+
+/* animate icon and bar gradient on hover */
+.card:hover .icon > i {
+  background-position: 100% 50%;
+}
+.card:hover::after {
+  background-position: 100% 0%;
+}
+
+
+
+
+
+
+
+
+.card {
+  --grad: red, blue;
+  padding: 2.5rem;
+  background-image: linear-gradient(to bottom left, #e5f1f3, #c5dde2);
+  border-radius: 2rem;
+  gap: 1.5rem;
+  display: grid;
+  grid-template: 'title icon' 'content1 content1' 'bar bar' / 1fr auto;
+  font-family: system-ui, sans-serif;
+  color: #444447;
+  box-shadow: 
+    inset -2px 2px hsl(0 0 100% / 1),
+    -20px 20px 40px hsl(0 0 0 / .25) ;
+  
+  .title {
+    font-size: 1.5rem;
+    grid-area: title;
+    align-self: end;
+    text-transform: uppercase;
+    font-weight: 500;
+    word-break: break-all;
+    
+  }
+
+  .icon {
+    grid-area: icon;
+    font-size: 3rem;
+    
+    > i {
+      color: transparent;
+      background: linear-gradient(to right, var(--grad));
+      background-clip: text;
+    }
+  }
+  .content1 {
+    grid-area: content1;
+    & > *:first-child { margin-top: 0rem}
+    & > *:last-child { margin-bottom: 0rem}
+  }
+  &::after {
+    content1: "";
+    grid-area: bar;
+    height: 2px;
+    background-image: linear-gradient(90deg, var(--grad));
+/*     margin-inline: -1.5rem; */
+  }
+}
+
+
 
         footer {
             text-align: center;
@@ -210,21 +339,52 @@
             </div>
 
             <div class="container">
-                <div class="row">
-                    <div class="col-md-4"><div class="step-card"><h2>1. Add Teachers</h2><p>Navigate to the "Add Teachers" section and add details. Edit or remove incorrect entries anytime.</p></div></div>
-                    <div class="col-md-4"><div class="step-card"><h2>2. Add Rooms</h2><p>Go to "Add Rooms" to register classrooms. Incorrect details can be fixed via Edit Rooms.</p></div></div>
-                    <div class="col-md-4"><div class="step-card"><h2>3. Add Timings</h2><p>Set up lecture timings easily and edit them anytime later.</p></div></div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-4"><div class="step-card"><h2>4. Add Courses</h2><p>Fill in course details. You can view or edit them later in the "Edit Courses" section.</p></div></div>
-                    <div class="col-md-4"><div class="step-card"><h2>5. Add Departments</h2><p>Register departments with ease. All incorrect entries can be managed via edit option.</p></div></div>
-                    <div class="col-md-4"><div class="step-card"><h2>6. Add Sections</h2><p>Define sections of classes here. Modify or delete incorrect data anytime.</p></div></div>
-                </div>
-
-                <div class="row justify-content-center">
-                    <div class="col-md-6"><div class="step-card"><h2>7. Generate Timetable</h2><p>Click on "Generate Timetable" and let our algorithm create the optimized schedule for you.</p></div></div>
-                </div>
+                   <div class="grid-container">
+  <div class="card">
+    <div class="title">Programming</div>
+    <div class="icon"><i class="fa-thin fa-laptop-code"></i></div>
+    <div class="content1">
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, voluptatum. Magni hic, voluptate debitis esse corporis dolor laudantium quae quo!</p>
+    </div>
+  </div>
+  
+  <div class="card">
+    <div class="title">Security</div>
+    <div class="icon"><i class="fa-thin fa-shield-check"></i></div>
+    <div class="content1">
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, voluptatum. Magni hic, voluptate debitis esse corporis dolor laudantium quae quo!</p>
+    </div>
+  </div>
+    <div class="card">
+    <div class="title">Security</div>
+    <div class="icon"><i class="fa-thin fa-shield-check"></i></div>
+    <div class="content1">
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, voluptatum. Magni hic, voluptate debitis esse corporis dolor laudantium quae quo!</p>
+    </div>
+  </div>
+    <div class="card">
+    <div class="title">Security</div>
+    <div class="icon"><i class="fa-thin fa-shield-check"></i></div>
+    <div class="content1">
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, voluptatum. Magni hic, voluptate debitis esse corporis dolor laudantium quae quo!</p>
+    </div>
+  </div>
+    <div class="card">
+    <div class="title">Security</div>
+    <div class="icon"><i class="fa-thin fa-shield-check"></i></div>
+    <div class="content1">
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, voluptatum. Magni hic, voluptate debitis esse corporis dolor laudantium quae quo!</p>
+    </div>
+  </div>
+  
+  <div class="card">
+    <div class="title">Maintenance</div>
+    <div class="icon"><i class="fa-thin fa-wrench-simple"></i></div>
+    <div class="content1">
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, voluptatum. Magni hic, voluptate debitis esse corporis dolor laudantium quae quo!</p>
+    </div>
+  </div>
+</div>
             </div>
         </main>
 
