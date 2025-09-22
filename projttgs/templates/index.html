@@ -17,7 +17,7 @@
     <style>
 		/* General */
 body {
-	font-family: 'Poppins', sans-serif;
+	font-family: 'Helvetica ', sans-serif;
 	background-color: #f8f9fa;
 	margin: 0;
 	padding: 0;
@@ -56,9 +56,10 @@ body {
 /* Hover effect */
 .navbar-nav .nav-link:hover {
 	color: #fff !important;
-	border: 2px solid #00e5ff;
+	{% comment %} border: 2px solid #00e5ff; {% endcomment %}
 	box-shadow: 0 0 12px #00e5ff, 0 0 25px #00e5ff inset;
 	transform: scale(1.05);
+	cursor:pointer;
 }
 
 .navbar-nav .nav-link:hover::before {
@@ -68,7 +69,7 @@ body {
 
 /* Active link style */
 .navbar-nav .active .nav-link {
-	background: #1976d2;
+	{% comment %} background: #1976d2; {% endcomment %}
 	color: #fff !important;
 	border-radius: 25px;
 	box-shadow: 0 0 15px #1976d2;
@@ -220,26 +221,61 @@ footer .col-12 {
 }
 
 
-
-.container {
+//image of 4
+.container1 {
   padding: 2rem;
+  border:2px solid black;
 }
 
 .split-image-container {
   position: relative;
-  width: 600px;
-  height: 600px;
+  width: 400px;
+  height: 400px;
   margin: 0 auto;
+   border:2px solid black;
 }
 
 .quadrant {
   position: absolute;
   width: 50%;
   height: 50%;
-  background-image: url("https://i.postimg.cc/fLt0GJbT/Gemini-Generated-Image-mow357mow357mow3.png");
-  background-size: 600px 600px;
+  background-image: url("https://www.news-medical.net/images/Article_Images/ImageForArticle_23907_16994605155791811.jpg");
+  background-size: 400px 400px;
   transition: transform 0.3s ease;
 }
+.fourimage {
+  display: flex;
+  align-items: center;       /* vertically center */
+  justify-content:space-around;  /* horizontally center overall */
+  gap: 2rem;                 /* space between image and text */
+ padding-top:35px;padding: 30px 10px 10px 20px; 
+  position: relative;
+ margine: 10px 10px 10px 10px;
+
+}
+
+.fourimage {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 2rem;
+  padding: 10px;
+  opacity: 0;                 /* initially invisible */
+  transform: translateY(30px); /* initially 30px niche */
+  animation: slideUp 1s ease forwards; /* animate on load */
+  animation-delay: 0.3s;      /* optional delay */
+}
+
+@keyframes slideUp {
+  to {
+    opacity: 1;
+    transform: translateY(0); /* final position */
+  }
+}
+
+
+
+
 
 .quadrant-1 {
   top: 0;
@@ -334,7 +370,7 @@ footer .col-12 {
 		</div>
 
 		<!-- ✅ Jumbotron -->
-		<div class="container jumbotron mt-5">
+		{% comment %} <div class="container jumbotron mt-5">
 			<div class="row">
 				<div class="col-md-9">
 					<p class="lead">Welcome to Scheduler! A timetable management system for colleges and universities to schedule their organization's timetable. If you face any challenges, feel free to contact us.</p>
@@ -343,22 +379,30 @@ footer .col-12 {
 					<a href="{% url 'contact' %}"><button class="btn btn-outline-primary btn-lg">Contact Us</button></a>
 				</div>
 			</div>
-		</div>
+		</div> {% endcomment %}
 		<div>
-			<div class="container">
-				<div class="split-image-container">
-					<div class="quadrant quadrant-1"></div>
-					<div class="quadrant quadrant-2"></div>
-					<div class="quadrant quadrant-3"></div>
-					<div class="quadrant quadrant-4"></div>
-				</div>
+			<div class="fourimage">
+				<div class="container1">
+					<div class="split-image-container">
+						<div class="quadrant quadrant-1"></div>
+						<div class="quadrant quadrant-2"></div>
+						<div class="quadrant quadrant-3"></div>
+						<div class="quadrant quadrant-4"></div>
+					</div>
+			  </div>
+			  <div class="container1">
+				  <h1 class="shedulo-heading">SheduloAI</h1>
+              <p class="shedulo-text">SheduloAI is an intelligent timetable generator that helps schools and colleges create optimized schedules effortlessly. Using AI techniques like Genetic Algorithms and Particle Swarm Optimization (PSO), it automatically assigns classes, balances workloads, and ensures teachers’ and students’ time is efficiently managed. These optimization methods help generate conflict-free, efficient, and flexible timetables in minimal time.</p>
+			  </div>
 			</div>
+			
 			<div>
 				
 			</div>
 		</div>
 		<!-- ✅ Features -->
-		<div class="container text-center my-5">
+		 <div class="fourimage">
+			<div class="container text-center my-5">
 			<h1 class="display-4">Build with ease</h1>
 			<p class="lead">Swift, efficient and smooth timetable generation with complete collision avoidance.</p>
 			<div class="row mt-4">
@@ -378,6 +422,8 @@ footer .col-12 {
 					<p>Trustworthy and Efficient.</p>
 				</div>
 			</div>
+		 </div>
+		
 		</div>
 
 		<!-- ✅ Social Icons -->
@@ -426,5 +472,7 @@ footer .col-12 {
 			</div>
 		</footer>
     </form>
+	
+	
 </body>
 </html>
