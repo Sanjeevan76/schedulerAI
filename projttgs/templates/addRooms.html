@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>TTGS | Dashboard</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/carousel/">
+
+     <style>
+     /* Background */
+body {
+  background: linear-gradient(120deg, #f0faff, #eafdf7);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding-top: 80px;
+}
+
+/* Headings */
+h2 {
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 10px;
+  text-align: center;
+  font-size: 32px;
+}
+
+h5 {
+  color: #555;
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 18px;
+}
+
+/* Form container */
+form fieldset {
+  background: #fff;
+  padding: 40px 50px;
+  margin: 0 auto;
+  max-width: 700px;
+  border-radius: 12px;
+  border: none;
+  box-shadow: 0px 6px 20px rgba(0,0,0,0.15);
+}
+
+/* Django form elements */
+form p {
+  margin-bottom: 18px;
+}
+
+form label {
+  font-weight: 600;
+  color: #444;
+  display: block;
+  margin-bottom: 8px;
+}
+
+form input,
+form select,
+form textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 15px;
+  transition: all 0.3s ease-in-out;
+}
+
+form input:focus,
+form select:focus,
+form textarea:focus {
+  border-color: #257a7a;
+  box-shadow: 0px 0px 8px rgba(37, 122, 122, 0.4);
+  outline: none;
+}
+
+/* Buttons */
+.submit,
+input[type="submit"] {
+  display: inline-block;
+  background: linear-gradient(135deg, #257a7a, #3cb371);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 25px;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  margin: 10px 5px;
+  text-align: center;
+  box-shadow: 0px 5px 15px rgba(0,0,0,0.12);
+}
+
+.submit:hover,
+input[type="submit"]:hover {
+  transform: scale(1.05);
+  background: linear-gradient(135deg, #1d5f5f, #2e8b57);
+}
+
+/* Navbar branding */
+.navbar-brand {
+  font-size: 20px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+
+    </style>
+
+    <link rel="stylesheet" type="text/css" href="static/css/index.css">
+
+</head>
+<body>
+        <header>
+            <!--Navigation Bar-->
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+                <a class="navbar-brand" href="#"><b>TIMETABLE GENERATOR</b></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'admindash' %}">Get Started</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'addInstructors' %}">Add Teachers</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'addRooms' %}">Add Rooms</a>
+                    </li>
+                    <li class="nav-item">
+		                <a class="nav-link" href="{% url 'addTimings' %}">Add Timings</a>
+		            </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'addCourses' %}">Add Courses</a>
+                    </li>
+                    <li class="nav-item">
+			            <a class="nav-link" href="{% url 'addDepts' %}">Add Departments</a>
+		            </li>
+                    <li class="nav-item">
+			            <a class="nav-link" href="{% url 'addSections' %}">Add Sections</a>
+		            </li>
+                    <li class="nav-item">
+			            <a class="nav-link" href="{% url 'generate' %}">Generate Timetable</a>
+		            </li>
+                    <li class="nav-item active">
+			            <a class="nav-link">|</a>
+		            </li>
+                    <li class="nav-item dropdown">
+		                <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Welcome, {{ user.first_name }}</a>
+			            <div class="dropdown-menu" aria-labelledby="dropdown03">
+			                <a class="dropdown-item" href="{% url 'password_change' %}">Change Password</a>
+				            <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+			            </div>
+		            </li>
+                    </ul>
+
+                    <script type="text/javascript">
+
+        var checkList = document.getElementById('list1');
+        var items = document.getElementById('items');
+        checkList.getElementsByClassName('anchor')[0].onclick = function (evt) {
+            if (items.classList.contains('visible')){
+                items.classList.remove('visible');
+                items.style.display = "none";
+            }
+
+            else{
+                items.classList.add('visible');
+                items.style.display = "block";
+            }
+
+
+        }
+
+        items.onblur = function(evt) {
+            items.classList.remove('visible');
+        }
+    </script>
+                </div>
+            </nav>
+        </header><br><br>
+        {% block content %}
+        {% load static %}
+        <h2>Add Rooms</h2>
+        <h5>Please use the following form to enter the Rooms into the system for timetable generation</h5>
+<form method="post">
+	{% csrf_token %}
+	<fieldset>
+		<div class="tabcontent" id="new">
+			{{ form.as_p }}
+        <br>
+		<a href="{% url 'editrooms' %}"><h1 class="submit" onclick="openPage('edit')">View / Edit Rooms</h1>&nbsp;</a><input type="submit" value="Add Room" class="submit">
+		</div>
+	</fieldset>
+</form>
+
+{% endblock %}
+</body>
+</html>

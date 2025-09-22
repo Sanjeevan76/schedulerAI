@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>TTGS | Timetable Generation System</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/carousel/">
+
+	<!-- Google Font -->
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+		/* General */
+body {
+	font-family: 'Poppins', sans-serif;
+	background-color: #f8f9fa;
+	margin: 0;
+	padding: 0;
+	overflow-x: hidden;
+}
+
+/* ✅ Navbar */
+.navbar-nav .nav-link {
+	color: #fff !important;
+	background: transparent;
+	padding: 8px 18px;
+	margin: 5px;
+	border-radius: 25px;
+	font-weight: 600;
+	transition: all 0.3s ease-in-out;
+	position: relative;
+	overflow: hidden;
+	border: 2px solid transparent;
+}
+
+/* Default border glowing */
+.navbar-nav .nav-link::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	border-radius: 25px;
+	background: linear-gradient(45deg, #00e5ff, #1976d2, #ff4081);
+	background-size: 300% 300%;
+	opacity: 0;
+	transition: opacity 0.3s;
+	z-index: -1;
+}
+
+/* Hover effect */
+.navbar-nav .nav-link:hover {
+	color: #fff !important;
+	border: 2px solid #00e5ff;
+	box-shadow: 0 0 12px #00e5ff, 0 0 25px #00e5ff inset;
+	transform: scale(1.05);
+}
+
+.navbar-nav .nav-link:hover::before {
+	opacity: 1;
+	animation: glowMove 4s linear infinite;
+}
+
+/* Active link style */
+.navbar-nav .active .nav-link {
+	background: #1976d2;
+	color: #fff !important;
+	border-radius: 25px;
+	box-shadow: 0 0 15px #1976d2;
+}
+
+/* Gradient animation */
+@keyframes glowMove {
+	0% { background-position: 0% 50%; }
+	50% { background-position: 100% 50%; }
+	100% { background-position: 0% 50%; }
+}
+
+/* ✅ Buttons */
+.btn {
+	padding: 10px 25px;
+	border-radius: 25px;
+	font-weight: 600;
+	transition: all 0.3s ease-in-out;
+}
+.btn-primary {
+	background: linear-gradient(90deg, #0d47a1, #1976d2);
+	border: none;
+}
+.btn-primary:hover {
+	background: linear-gradient(90deg, #1976d2, #0d47a1);
+	transform: scale(1.05);
+	box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+.btn-outline-primary {
+	border: 2px solid #1976d2;
+	color: #1976d2;
+}
+.btn-outline-primary:hover {
+	background: #1976d2;
+	color: #fff;
+	transform: scale(1.05);
+	box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+}
+
+/* ✅ Video Section */
+.video-container {
+	position: relative;
+	width: 100%;
+	height: 70vh;
+	overflow: hidden;
+}
+.video-container iframe {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+}
+.video-overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0,0,0,0.4); /* halka dark layer */
+	display: flex;
+	align-items: flex-end; /* neeche le aayega */
+	justify-content: flex-start; /* left side */
+	padding: 20px;
+}
+
+.btn-glow {
+	padding: 12px 30px;
+	font-size: 1.1rem;
+	font-weight: 600;
+	color: #fff;
+	background: transparent;
+	border: 2px solid #00e5ff;
+	border-radius: 30px;
+	text-decoration: none;
+	transition: 0.3s ease-in-out;
+	box-shadow: 0 0 15px #00e5ff, 0 0 30px #00e5ff inset;
+}
+
+.btn-glow:hover {
+	color: #000;
+	background: #00e5ff;
+	box-shadow: 0 0 25px #00e5ff, 0 0 50px #00e5ff inset;
+	transform: scale(1.05);
+}
+
+
+/* ✅ Jumbotron */
+.jumbotron {
+	background: #fff;
+	border-radius: 12px;
+	box-shadow: 0px 5px 20px rgba(0,0,0,0.1);
+	padding: 40px 30px;
+	margin-top: 40px;
+	transition: transform 0.3s;
+}
+.jumbotron:hover {
+	transform: scale(1.02);
+}
+
+/* ✅ Features */
+.row.text-center i {
+	font-size: 50px;
+	color: #1976d2;
+	margin-bottom: 15px;
+	transition: 0.3s;
+}
+.row.text-center i:hover {
+	color: #0d47a1;
+	transform: scale(1.2);
+}
+.row.text-center h3 {
+	font-weight: 600;
+}
+
+/* ✅ Social Icons */
+.social a {
+	font-size: 30px;
+	margin: 0 15px;
+	color: #333;
+	transition: 0.3s;
+}
+.social a:hover {
+	color: #1976d2;
+	transform: scale(1.3) rotate(5deg);
+}
+
+/* ✅ Footer */
+footer {
+	background: #0d47a1;
+	color: #fff;
+	padding: 40px 20px;
+}
+footer h5 {
+	font-weight: 600;
+	margin-bottom: 15px;
+}
+footer p {
+	margin: 5px 0;
+	color: #e0e0e0;
+}
+footer hr.light {
+	border-top: 2px solid #fff;
+	width: 60%;
+}
+footer .col-12 {
+	margin-top: 20px;
+}
+
+/* ✅ Responsive */
+@media (max-width: 768px) {
+	.navbar-nav {
+		background: #0d47a1;
+		padding: 15px;
+		border-radius: 10px;
+	}
+	.navbar-nav .nav-link {
+		margin: 8px 0;
+	}
+	.video-container iframe {
+		height: 100%;
+	}
+}
+    </style>
+</head>
+<body>
+    <form id="form1">
+        <!-- ✅ Navbar -->
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top">
+				<a class="navbar-brand" href="#"><b>Scheduler</b></a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarCollapse">
+					<ul class="navbar-nav ml-auto">
+						<li class="nav-item active"><a class="nav-link" href="{% url 'index' %}">Home</a></li>
+						<li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About Us</a></li>
+						<li class="nav-item"><a class="nav-link" href="{% url 'help' %}">Help</a></li>
+						<li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact Us</a></li>
+						<li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+						<li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Sign Up</a></li>
+					</ul>
+				</div>
+			</nav>
+		</header>
+
+        <!-- ✅ YouTube Video Background -->
+		<div class="video-container">
+<iframe 
+    width="560" 
+    height="250" 
+    src="https://www.youtube.com/embed/VH1C7xACJt4?autoplay=1&mute=1&loop=1&playlist=VH1C7xACJt4&controls=0&modestbranding=1&showinfo=0" 
+    title="YouTube video player" 
+    frameborder="0" 
+    allow="autoplay; encrypted-media; gyroscope; picture-in-picture" 
+    referrerpolicy="strict-origin-when-cross-origin">
+</iframe>
+
+			<div class="video-overlay">
+				<p><a class="btn btn-primary btn-lg" href="{% url 'login' %}">Generate Timetable</a></p>
+			</div>
+		</div>
+
+		<!-- ✅ Jumbotron -->
+		<div class="container jumbotron mt-5">
+			<div class="row">
+				<div class="col-md-9">
+					<p class="lead">Welcome to Scheduler! A timetable management system for colleges and universities to schedule their organization's timetable. If you face any challenges, feel free to contact us.</p>
+				</div>
+				<div class="col-md-3 text-center">
+					<a href="{% url 'contact' %}"><button class="btn btn-outline-primary btn-lg">Contact Us</button></a>
+				</div>
+			</div>
+		</div>
+
+		<!-- ✅ Features -->
+		<div class="container text-center my-5">
+			<h1 class="display-4">Build with ease</h1>
+			<p class="lead">Swift, efficient and smooth timetable generation with complete collision avoidance.</p>
+			<div class="row mt-4">
+				<div class="col-md-4">
+					<i class="fa fa-bolt"></i>
+					<h3>Fast</h3>
+					<p>Quick and Smooth Scheduling.</p>
+				</div>
+				<div class="col-md-4">
+					<i class="fa fa-lock"></i>
+					<h3>Secure</h3>
+					<p>Safe and Reliable Process.</p>
+				</div>
+				<div class="col-md-4">
+					<i class="fa fa-check-square"></i>
+					<h3>Reliable</h3>
+					<p>Trustworthy and Efficient.</p>
+				</div>
+			</div>
+		</div>
+
+		<!-- ✅ Social Icons -->
+		<div class="container text-center my-5">
+			<h2>Connect</h2>
+			<div class="social mt-3">
+				<a href="https://www.facebook.com/"><i class="fab fa-facebook"></i></a>
+				<a href="https://www.youtube.com/"><i class="fab fa-youtube"></i></a>
+				<a href="https://www.instagram.com/"><i class="fab fa-instagram"></i></a>
+				<a href="#"><i class="fab fa-google-plus-g"></i></a>
+				<a href="https://twitter.com/"><i class="fab fa-twitter"></i></a>
+			</div>
+		</div>
+
+		<!-- ✅ Footer -->
+		<footer>
+			<div class="container">
+				<div class="row text-center">
+					<div class="col-md-4">
+						<hr class="light">
+						<h5>Our Address</h5>
+						<p>+91 9823451278</p>
+						<p>contactus@ttgs.com</p>
+						<p>Mumbai, Maharashtra, 400006</p>
+					</div>
+					<div class="col-md-4">
+						<hr class="light">
+						<h5>Our Hours</h5>
+						<p>Mon - Fri: 9AM - 5PM</p>
+						<p>Sat: 10AM - 4PM</p>
+						<p>Sunday Closed</p>
+					</div>
+					<div class="col-md-4">
+						<hr class="light">
+						<h5>Service Areas</h5>
+						<p>Mumbai</p>
+						<p>Ahmedabad</p>
+						<p>Chennai</p>
+						<p>Bhopal</p>
+					</div>
+					<div class="col-12">
+						<hr class="light">
+						<h5>&copy; sanjeevan@gmail.com</h5>
+					</div>
+				</div>
+			</div>
+		</footer>
+    </form>
+</body>
+</html>

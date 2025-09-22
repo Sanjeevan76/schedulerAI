@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>TTGS | Dashboard</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/carousel/">
+<style>
+body {
+  background-color: #f8fafc;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #2d3436;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-brand {
+  font-size: 22px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+h2 {
+  margin-top: 80px;
+  font-size: 28px;
+  font-weight: 700;
+  color: #2c3e50;
+  text-align: center;
+}
+
+h5 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-weight: 400;
+  font-size: 16px;
+  color: #636e72;
+}
+
+form {
+  margin: 0 auto;
+  max-width: 700px;
+}
+
+form fieldset {
+  padding: 40px;
+  border-radius: 12px;
+  border: none;
+  background: #fff;
+  box-shadow: 0px 6px 18px rgba(0,0,0,0.1);
+}
+
+fieldset label {
+  font-size: 15px;
+  font-weight: 500;
+  margin-top: 12px;
+  display: block;
+  color: #2d3436;
+}
+
+fieldset input, select, textarea {
+  width: 100%;
+  padding: 12px 15px;
+  margin-top: 6px;
+  margin-bottom: 18px;
+  border: 1px solid #dfe6e9;
+  border-radius: 6px;
+  background-color: #f9fbfc;
+  transition: all 0.3s ease;
+}
+
+fieldset input:focus, select:focus, textarea:focus {
+  border-color: #2980b9;
+  outline: none;
+  background-color: #fff;
+  box-shadow: 0px 0px 6px rgba(41,128,185,0.3);
+}
+
+.submit {
+  background: #2980b9;
+  border: none;
+  border-radius: 6px;
+  padding: 12px 30px;
+  color: white;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  margin: 10px 5px;
+  display: inline-block;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.submit:hover {
+  background: #1f6391;
+  box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+  transform: translateY(-2px);
+}
+
+a.submit {
+  text-decoration: none;
+}
+
+
+</style>
+
+
+    <link rel="stylesheet" type="text/css" href="static/css/index.css">
+
+</head>
+<body>
+        <header>
+            <!--Navigation Bar-->
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+                <a class="navbar-brand" href="#"><b>TIMETABLE GENERATOR</b></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'admindash' %}">Get Started</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'addInstructors' %}">Add Teachers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'addRooms' %}">Add Rooms</a>
+                    </li>
+                    <li class="nav-item">
+		                <a class="nav-link" href="{% url 'addTimings' %}">Add Timings</a>
+		            </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'addCourses' %}">Add Courses</a>
+                    </li>
+                    <li class="nav-item">
+			            <a class="nav-link" href="{% url 'addDepts' %}">Add Departments</a>
+		            </li>
+                    <li class="nav-item">
+			            <a class="nav-link" href="{% url 'addSections' %}">Add Sections</a>
+		            </li>
+                    <li class="nav-item">
+			            <a class="nav-link" href="{% url 'generate' %}">Generate Timetable</a>
+		            </li>
+                    <li class="nav-item active">
+			            <a class="nav-link">|</a>
+		            </li>
+                    <li class="nav-item dropdown">
+		                <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Welcome, {{ user.first_name }}</a>
+			            <div class="dropdown-menu" aria-labelledby="dropdown03">
+			                <a class="dropdown-item" href="{% url 'password_change' %}">Change Password</a>
+				            <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+			            </div>
+		            </li>
+                    </ul>
+                <script type="text/javascript">
+
+        var checkList = document.getElementById('list1');
+        var items = document.getElementById('items');
+        checkList.getElementsByClassName('anchor')[0].onclick = function (evt) {
+            if (items.classList.contains('visible')){
+                items.classList.remove('visible');
+                items.style.display = "none";
+            }
+
+            else{
+                items.classList.add('visible');
+                items.style.display = "block";
+            }
+
+
+        }
+
+        items.onblur = function(evt) {
+            items.classList.remove('visible');
+        }
+    </script>
+                </div>
+            </nav>
+        </header>
+        {% block content %}
+{% load static %}
+        <br><br>
+        <h2>Add Courses</h2>
+        <h5>Please use the following form to enter the Courses into the system for timetable generation</h5>
+<form method="post">
+	{% csrf_token %}
+	<fieldset>
+		<div class="tabcontent" id="new">
+			{{ form.as_p }}
+		<a href="{% url 'editcourse' %}"><h1 class="submit" onclick="openPage('edit')">View / Edit Courses</h1></a><input type="submit" value="Add Courses" class="submit">
+		</div>
+	</fieldset>
+</form>
+</body>
+</html>
+
+{% endblock %}

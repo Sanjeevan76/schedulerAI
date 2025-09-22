@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>TTGS | Get Started</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+	<link rel="stylesheet" type="text/css" href="static/css/aboutus.css">
+
+    <style>
+        body {
+            padding-top: 4rem;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            {% comment %} background-color: #f8f9fa; {% endcomment %}
+        }
+
+        nav {
+            font-family: sans-serif;
+        }
+
+        .navbar-brand {
+            font-size: 22px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        .jumbotron {
+            background: linear-gradient(135deg, #0062E6, #33AEFF);
+            color: #fff;
+            border-radius: 0.75rem;
+            padding: 3rem 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        .nav-btn {
+  position: relative;
+  padding: 8px 18px !important;
+  margin: 0 6px;
+  color: #fff !important;
+  font-weight: 500;
+  border-radius: 25px;
+  background: linear-gradient(135deg, #ff512f, #f09819);
+  transition: all 0.3s ease;
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* Hover animation effect */
+.nav-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #f09819, #ff512f);
+  transition: 0.4s;
+  z-index: -1;
+  border-radius: 25px;
+}
+.nav-btn:hover::before {
+  left: 0;
+}
+.nav-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 10px #ff512f, 0 0 20px #f09819;
+}
+
+        .video-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+
+.video-wrapper video {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+}
+
+@media (max-width: 576px) {
+    .video-wrapper {
+        max-width: 100%;
+        border-radius: 0.5rem;
+    }
+}
+
+
+        .jumbotron h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+
+        .jumbotron p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .btn-primary {
+            background-color: #0056b3;
+            border: none;
+            transition: 0.3s;
+        }
+
+        .btn-primary:hover {
+            background-color: #00408f;
+        }
+
+        .step-card {
+            background: #fff;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+
+        .step-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+        }
+
+        .step-card h2 {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 0.8rem;
+        }
+
+        .step-card p {
+            font-size: 0.95rem;
+            color: #555;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            background-color: #343a40;
+            color: #ddd;
+            border-radius: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <form id="form1">
+        <header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+                <a class="navbar-brand" href="#"><b>Scheduler</b></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active"><a class="nav-link" href="{% url 'admindash' %}">Get Started</a></li>
+                        <li class="nav-item"><a class="nav-link nav-btn" href="{% url 'addInstructors' %}">Add Teachers</a></li>
+                        <li class="nav-item"><a class="nav-link nav-btn" href="{% url 'addRooms' %}">Add Rooms</a></li>
+                        <li class="nav-item"><a class="nav-link nav-btn" href="{% url 'addTimings' %}">Add Timings</a></li>
+                        <li class="nav-item"><a class="nav-link nav-btn" href="{% url 'addCourses' %}">Add Courses</a></li>
+                        <li class="nav-item"><a class="nav-link nav-btn" href="{% url 'addDepts' %}">Add Departments</a></li>
+                        <li class="nav-item"><a class="nav-link nav-btn" href="{% url 'addSections' %}">Add Sections</a></li>
+                        <li class="nav-item"><a class="nav-link nav-btn" href="{% url 'generate' %}">Generate Timetable</a></li>
+                        <li class="nav-item dropdown">
+		                    <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown">Welcome, {{ user.first_name }}</a>
+			                <div class="dropdown-menu" aria-labelledby="dropdown03">
+			                    <a class="dropdown-item" href="{% url 'password_change' %}">Change Password</a>
+				                <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+			                </div>
+		                </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <main role="main">
+          <div class="jumbotron text-center">
+    <div class="container">
+        <h1 class="display-4">Hello {{ user.first_name }}! 👋</h1>
+        <p>
+            Welcome to <b>Scheduler</b>, your timetable management system. 
+            Schedule timetables with ease, save time, and boost efficiency for your organization.
+        </p>
+
+        <!-- Responsive Video -->
+        <div class="video-wrapper mb-4">
+            <video autoplay muted loop playsinline>
+                <!-- yaha direct path use karo -->
+                <source src="/static/img/v.mp4" type="video/mp4">
+                <!-- ya phir same folder me hai to -->
+                <!-- <source src="demo.mp4" type="video/mp4"> -->
+                Your browser does not support the video tag.
+            </video>
+        </div>
+
+        <p>
+            <a class="btn btn-light btn-lg" href="{% url 'addInstructors' %}" role="button">Get Started &raquo;</a>
+            <a class="btn btn-outline-light btn-lg" href="{% url 'contact' %}" role="button">Contact Us &raquo;</a>
+        </p>
+    </div>
+</div>
+
+            </div>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4"><div class="step-card"><h2>1. Add Teachers</h2><p>Navigate to the "Add Teachers" section and add details. Edit or remove incorrect entries anytime.</p></div></div>
+                    <div class="col-md-4"><div class="step-card"><h2>2. Add Rooms</h2><p>Go to "Add Rooms" to register classrooms. Incorrect details can be fixed via Edit Rooms.</p></div></div>
+                    <div class="col-md-4"><div class="step-card"><h2>3. Add Timings</h2><p>Set up lecture timings easily and edit them anytime later.</p></div></div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4"><div class="step-card"><h2>4. Add Courses</h2><p>Fill in course details. You can view or edit them later in the "Edit Courses" section.</p></div></div>
+                    <div class="col-md-4"><div class="step-card"><h2>5. Add Departments</h2><p>Register departments with ease. All incorrect entries can be managed via edit option.</p></div></div>
+                    <div class="col-md-4"><div class="step-card"><h2>6. Add Sections</h2><p>Define sections of classes here. Modify or delete incorrect data anytime.</p></div></div>
+                </div>
+
+                <div class="row justify-content-center">
+                    <div class="col-md-6"><div class="step-card"><h2>7. Generate Timetable</h2><p>Click on "Generate Timetable" and let our algorithm create the optimized schedule for you.</p></div></div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="container">
+            <p>&copy; Scheduler. All Rights Reserved</p>
+        </footer>
+    </form>
+</body>
+</html>

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>TTGS | Dashboard</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/carousel/">
+
+     <style>
+    /* Fieldset */
+.fieldset {
+    margin: 50px auto;
+    padding: 40px;
+    max-width: 1000px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: #257a7a;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    background-color: #f7fffd;
+}
+
+/* Stylish Back Button */
+.tablink {
+    display: inline-block;
+    background: linear-gradient(135deg, #257a7a, #38c0b3);
+    color: #fff;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 5px 12px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+    margin: 20px 0 30px 0; /* spacing */
+    text-align: center;
+    text-decoration: none;
+}
+
+.tablink:hover {
+    background: linear-gradient(135deg, #38c0b3, #257a7a);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+}
+
+/* Table styling */
+.table1 {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    text-align: center;
+    margin-top: 20px;
+    font-size: 16px;
+}
+
+.table1 th {
+    background: linear-gradient(135deg, #257a7a, #38c0b3);
+    color: #fff;
+    font-weight: 600;
+    padding: 14px;
+}
+
+.table1 td {
+    background-color: #f9fdfd;
+    padding: 12px;
+    border-bottom: 1px solid #e0e0e0;
+    transition: background 0.3s;
+}
+
+.table1 tr:hover td {
+    background-color: #e8f9f7;
+}
+
+/* Delete Button */
+.cross {
+    font-size: 13px;
+    padding: 6px 12px;
+    border-radius: 5px;
+    background: #e63946;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.cross:hover {
+    background: #c92a36;
+    transform: scale(1.05);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+}
+
+    </style>
+
+    <link rel="stylesheet" type="text/css" href="static/css/index.css">
+
+</head>
+<body>
+        <header>
+            <!--Navigation Bar-->
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+                <a class="navbar-brand" href="#"><b>TIMETABLE GENERATOR</b></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'admindash' %}">Get Started</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'addInstructors' %}">Add Teachers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'addRooms' %}">Add Rooms</a>
+                    </li>
+                    <li class="nav-item">
+		                <a class="nav-link" href="{% url 'addTimings' %}">Add Timings</a>
+		            </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'addCourses' %}">Add Courses</a>
+                    </li>
+                    <li class="nav-item">
+			            <a class="nav-link" href="{% url 'addDepts' %}">Add Departments</a>
+		            </li>
+                    <li class="nav-item active">
+			            <a class="nav-link" href="{% url 'addSections' %}">Add Sections</a>
+		            </li>
+                    <li class="nav-item">
+			            <a class="nav-link" href="{% url 'generate' %}">Generate Timetable</a>
+		            </li>
+                    <li class="nav-item active">
+			            <a class="nav-link">|</a>
+		            </li>
+                    <li class="nav-item dropdown">
+		                <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Welcome, {{ user.first_name }}</a>
+			            <div class="dropdown-menu" aria-labelledby="dropdown03">
+			                <a class="dropdown-item" href="{% url 'password_change' %}">Change Password</a>
+				            <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+			            </div>
+		            </li>
+                    </ul>
+
+                    <script type="text/javascript">
+
+        var checkList = document.getElementById('list1');
+        var items = document.getElementById('items');
+        checkList.getElementsByClassName('anchor')[0].onclick = function (evt) {
+            if (items.classList.contains('visible')){
+                items.classList.remove('visible');
+                items.style.display = "none";
+            }
+
+            else{
+                items.classList.add('visible');
+                items.style.display = "block";
+            }
+
+
+        }
+
+        items.onblur = function(evt) {
+            items.classList.remove('visible');
+        }
+    </script>
+                </div>
+            </nav>
+        </header>
+        <br><br>
+    {% block content %}
+{% load static %}
+<fieldset class="fieldset">
+    <a href="{% url 'addSections'%}"><h1 class="tablink" onclick="openPage('new')" id="defaultOpen">Back to Add Sections</h1></a>
+    <div class="tabcontent" id="edit">
+        <table class="table1">
+            <thead>
+            <tr class="table-headers">
+            <th>Section Id</th>
+            <th>Department</th>
+            <th>Total Classes</th>
+            <th  class="empty"></th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {% for sec in sections %}
+            <tr>
+             <td>{{sec.section_id}}</td>
+             <td>{{sec.department}}</td>
+             <td>{{sec.num_class_in_week }}</td>
+             <td class="empty">
+                <form action="{% url 'deletesection' sec.section_id %}" method="post">
+                        {% csrf_token %}
+                        <input type="submit" value="Delete" class="cross">
+                </form>
+             </td>
+             </tr>
+            {% endfor %}
+            </tbody>
+
+        </table>
+    </div>
+</fieldset>
+
+<div class="img">
+
+</div>
+
+{% endblock %}
