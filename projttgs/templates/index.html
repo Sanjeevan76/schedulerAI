@@ -227,8 +227,8 @@ footer .col-12 {
 
 .split-image-container {
   position: relative;
-  width: 300px;
-  height: 300px;
+  width: 600px;
+  height: 600px;
   margin: 0 auto;
 }
 
@@ -237,7 +237,7 @@ footer .col-12 {
   width: 50%;
   height: 50%;
   background-image: url("https://i.postimg.cc/fLt0GJbT/Gemini-Generated-Image-mow357mow357mow3.png");
-  background-size: 300px 300px;
+  background-size: 600px 600px;
   transition: transform 0.3s ease;
 }
 
@@ -325,16 +325,8 @@ footer .col-12 {
 		</header>
 
         <!-- ✅ YouTube Video Background -->
-		<div class="video-container">
-<iframe 
-    width="560" 
-    height="250" 
-    src="https://www.youtube.com/embed/VH1C7xACJt4?autoplay=1&mute=1&loop=1&playlist=VH1C7xACJt4&controls=0&modestbranding=1&showinfo=0" 
-    title="YouTube video player" 
-    frameborder="0" 
-    allow="autoplay; encrypted-media; gyroscope; picture-in-picture" 
-    referrerpolicy="strict-origin-when-cross-origin">
-</iframe>
+		<div class="video-container" >
+			<video  src="../static/img/video.mp4"  autoplay muted loop></video>
 
 			<div class="video-overlay">
 				<p><a class="btn btn-primary btn-lg" href="{% url 'login' %}">Generate Timetable</a></p>
