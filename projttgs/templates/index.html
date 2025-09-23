@@ -18,7 +18,7 @@
 		/* General */
 body {
 	font-family: 'Helvetica ', sans-serif;
-	background: linear-gradient(90deg,rgba(42, 123, 155, 1) 0%, rgba(232, 226, 223, 1) 100%, rgba(237, 221, 83, 1) 100%);
+	{% comment %} background: linear-gradient(90deg,rgba(42, 123, 155, 1) 0%, rgba(232, 226, 223, 1) 100%, rgba(237, 221, 83, 1) 100%); {% endcomment %}
 	margin: 0;
 	padding: 0;
 	overflow-x: hidden;
@@ -26,7 +26,7 @@ body {
 
   body {
     margin: 0;
-    height: 500vh;
+    height: 100vh;
     {% comment %} background: #c3cbd8ff; /* dark bg so blue circles show */ {% endcomment %}
     {% comment %} overflow: hidden; {% endcomment %}
   }
@@ -286,7 +286,7 @@ footer .col-12 {
 //image of 4
 .container1 {
   padding: 2rem;
-  border:2px solid black;
+  border:20px;
 }
 
 .split-image-container {
@@ -312,7 +312,7 @@ footer .col-12 {
   gap: 2rem;                 /* space between image and text */
  padding-top:35px;padding: 30px 10px 10px 100px; 
   position: relative;
- margine: 10px 10px 10px 10px;
+ margin: 10px 10px 10px 10px;
 
 }
 
@@ -422,7 +422,7 @@ footer .col-12 {
   }
   .left-content h2 {
     margin: 0 0 85px;
-    font-size: 80px;
+    font-size: 50px;
 	font-family: 'Poppins', sans-serif; /* stylish font */
       font-weight: 900; /* extra bold */
       letter-spacing: 2px; /* thoda space between letters */
@@ -478,11 +478,186 @@ footer .col-12 {
   width: 400px;
   height: 300px;
   border-radius: 12px;
-  background-image: url("https://t4.ftcdn.net/jpg/03/23/82/99/360_F_323829966_H32wLhoouiPinJ66KyggCvqQ2dFPuuQ1.jpg");
+  background-image: url("https://images.unsplash.com/photo-1514782831304-632d84503f6f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1MTUzNXwwfDF8c2VhcmNofDJ8fCUyMlNjaGVkdWxpbmclMjJ8ZW58MHx8fHwxNzU4NjUwMTI2fDA&ixlib=rb-4.1.0&q=80&w=1080");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
+
+
+.sam-section {
+      background: url('https://www.transparenttextures.com/patterns/crissxcross.png'), #111;
+      background-size: cover;
+      text-align: center;
+      padding: 60px 20px;
+	  width: 98%;              /* 90% of total width */
+      margin: 0 auto; 
+    }
+
+    .sam-section h2 {
+      font-size: 32px;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .sam-subtitle {
+      font-size: 16px;
+      color: #ddd;
+      margin-bottom: 50px;
+    }
+
+    .sam-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .sam-box {
+      flex: 1 1 300px;
+      max-width: 350px;
+      text-align: left;
+    }
+
+    .sam-box h3 {
+      font-size: 26px;
+      font-weight: 900;
+      color: #a259ff; /* Purple shade */
+      margin-bottom: 15px;
+    }
+
+    .sam-box p {
+      font-size: 15px;
+      line-height: 1.6;
+      color: #ccc;
+      margin-bottom: 20px;
+    }
+
+    .sam-box a {
+      color: #a259ff;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .sam-box a:hover {
+      text-decoration: underline;
+    }
+
+
+
+
+	/* Main box renamed to .sanjeevan */
+    .sanjeevan {
+      width: 98%;
+      max-width: 1400px;
+      height: 400px; /* double height */
+      {% comment %} background: linear-gradient(90deg, rgba(42, 123, 155, 1) 0%, rgba(232, 226, 223, 1) 100%, rgba(237, 221, 83, 1) 100%); {% endcomment %}
+      padding: 40px;
+      border-radius: 20px;
+      position: relative;
+      overflow: hidden;
+      color: #111;
+      
+      /* Centering */
+      margin: 100px auto;   /* horizontally center + top-bottom spacing */
+      display: table;      /* helps to auto center */
+    }
+
+    .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Left Section */
+    .left {
+      max-width: 30%;
+    }
+
+    .left h1 {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 25px;
+      background: linear-gradient(135deg, #7a3cff, #a34bff);
+      border-radius: 30px;
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    /* Middle Section */
+    .middle {
+      text-align: center;
+      flex: 1;
+    }
+
+    .middle img {
+      max-width: 200px;
+      opacity: 0.25;
+    }
+
+    .middle p {
+      margin-top: -90px;
+      font-family: monospace;
+      font-size: 0.8rem;
+      color: #333;
+    }
+
+    /* Right Section */
+    .right {
+      max-width: 30%;
+    }
+
+    .right h2 {
+      font-size: 1.4rem;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    .right p {
+      line-height: 1.5;
+      margin-bottom: 15px;
+      font-size: 0.9rem;
+    }
+
+    .right a {
+      color: #7a3cff;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    /* Bottom Ticker */
+    .ticker {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      transform: rotate(-3deg);
+      background: #7a3cff;
+      color: #fff;
+      font-weight: bold;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .ticker span {
+      display: inline-block;
+      padding: 12px 30px;
+      animation: move 19s linear infinite;
+    }
+
+    @keyframes move {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
     </style>
 </head>
 <body>
@@ -543,20 +718,52 @@ footer .col-12 {
 			</div>
 		</div> {% endcomment %}
 
-				<div class="main-box">
+				{% comment %} <div class="main-box"> {% endcomment %}
 			<!-- Left side -->
 			<div class="left-content">
-			<h2>ScheduloAI</h2>
-			<p>Yahaan text ya details aa sakte hain.</p>
+			{% comment %} <h2>ScheduloAI</h2> {% endcomment %}
+			  {% comment %} <h2>YOUR IDEAL SCHEDULE IS JUST A CLICK AWAY</h2>
+        <p>From academic timetables to professional agendas, our generator offers structured schedules tailored to your specific needs and preferences.</p>
+       
 		<p><a class="btn btn-primary btn-lg" href="{% url 'login' %}">Generate Timetable</a></p>
-			</div>
+			</div> {% endcomment %}
 
 			<!-- Right side -->
-			<div class="overlap-container">
+			{% comment %} <div class="overlap-container">
 			<div class="box1"></div>
 			<div class="box2"></div>
 			</div>
-		</div>
+		</div> {% endcomment %}
+
+				 <div class="sanjeevan">
+    <div class="container">
+      <!-- Left Section -->
+      <div class="left">
+        <h1>WELCOME TO<br>SHEDULOAI</h1>
+        <a  class="btn" href="{% url 'login' %}">Let's Start</a>
+      </div>
+
+      <!-- Middle Section -->
+      <div class="middle">
+        {% comment %} <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjK0w2ODpgUezX3v6ks-BUtS-FIOX8oddHgA&s" alt="Eye"> {% endcomment %}
+        <p>CONTROLLING YOUR TIME IS<br>THE HIGHEST DIVIDEND MONEY PAYS.</p>
+      </div>
+
+      <!-- Right Section -->
+      <div class="right">
+        <h2>YOUR IDEAL SCHEDULE IS JUST A CLICK AWAY</h2>
+        <p>From academic timetables to professional agendas, our generator offers structured schedules tailored to your specific needs and preferences.</p>
+        <a href="#">About →</a>
+      </div>
+    </div>
+
+    <!-- Bottom Ticker -->
+    <div class="ticker">
+      <span>CREATE YOUR PERFECT TIMETABLE • CREATE YOUR PERFECT TIMETABLE • CREATE YOUR PERFECT TIMETABLE</span>
+    </div>
+  </div>
+
+
 
 
 		<div>
@@ -579,6 +786,40 @@ footer .col-12 {
 				
 			</div>
 		</div>
+
+
+
+  <section class="sam-section">
+    <h2 style="font-size: 36px; color: #e8e3e3ff; text-align: center; font-family: Arial, sans-serif; margin-bottom: 20px;">
+      FEATURES WE PROVIDE
+    </h2>
+
+    <p class="sam-subtitle">Take advantage of our innovative tool to generate schedules that save you time and effort!</p>
+    
+    <div class="sam-container">
+      
+      <div class="sam-box">
+        <h3>AUTOMATED SCHEDULING</h3>
+        <p>Leveraging our sophisticated algorithms, we automate the scheduling process to create personalized timetables that align perfectly with your requirements and preferences.</p>
+        <a href="#">Contact &rsaquo;</a>
+      </div>
+
+      <div class="sam-box">
+        <h3>USER-FRIENDLY INTERFACE</h3>
+        <p>Our platform is designed with simplicity in mind, allowing users to easily navigate and generate their timetables without any hassle, ensuring a smooth experience every step of the way.</p>
+        <a href="#">Contact &rsaquo;</a>
+      </div>
+
+      <div class="sam-box">
+        <h3>CUSTOMIZABLE OPTIONS</h3>
+        <p>We offer a range of customizable features, enabling you to adjust your timetable according to your specific needs, whether it's for academic, professional, or personal use.</p>
+        <a href="#">Contact &rsaquo;</a>
+      </div>
+
+    </div>
+  </section>
+
+		
 		<!-- ✅ Features -->
 		 <div class="fourimage">
 			<div class="container text-center my-5">
