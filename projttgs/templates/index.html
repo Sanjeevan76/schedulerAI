@@ -18,24 +18,85 @@
 		/* General */
 body {
 	font-family: 'Helvetica ', sans-serif;
-	background-color: #f8f9fa;
+	background: linear-gradient(90deg,rgba(42, 123, 155, 1) 0%, rgba(232, 226, 223, 1) 100%, rgba(237, 221, 83, 1) 100%);
 	margin: 0;
 	padding: 0;
 	overflow-x: hidden;
 }
 
+  body {
+    margin: 0;
+    height: 500vh;
+    {% comment %} background: #c3cbd8ff; /* dark bg so blue circles show */ {% endcomment %}
+    {% comment %} overflow: hidden; {% endcomment %}
+  }
+
+  .bubble {
+    position: absolute;
+    bottom: -100px;
+  background: linear-gradient(90deg,rgba(42, 123, 155, 1) 0%, rgba(204, 84, 41, 1) 58%, rgba(237, 221, 83, 1) 100%);
+    border-radius: 50%;
+    animation: rise 20s infinite ease-in;
+  }
+
+  /* random size/position for multiple bubbles */
+  .bubble:nth-child(1) {
+    width: 40px; height: 40px;
+    left: 10%;
+    animation-duration: 15s;
+  }
+  .bubble:nth-child(2) {
+    width: 25px; height: 25px;
+    left: 30%;
+    animation-duration: 18s;
+    animation-delay: 3s;
+  }
+  .bubble:nth-child(3) {
+    width: 60px; height: 60px;
+    left: 50%;
+    animation-duration: 22s;
+    animation-delay: 5s;
+  }
+  .bubble:nth-child(4) {
+    width: 20px; height: 20px;
+    left: 70%;
+    animation-duration: 17s;
+    animation-delay: 2s;
+  }
+  .bubble:nth-child(5) {
+    width: 50px; height: 50px;
+    left: 90%;
+    animation-duration: 25s;
+    animation-delay: 7s;
+  }
+
+  @keyframes rise {
+    0% {
+      transform: translateY(0) scale(1);
+      opacity: 0.6;
+    }
+    50% {
+      opacity: 0.3;
+    }
+    100% {
+      transform: translateY(-110vh) scale(1.2);
+      opacity: 0;
+    }
+  }
+
 /* ✅ Navbar */
 .navbar-nav .nav-link {
 .navbar {
-    background-color: #000 !important; /* solid black */
-    box-shadow: 0 2px 5px rgba(0,0,0,0.3); /* optional shadow */
-    z-index: 1030; /* ensures it stays above other content */
+    background-color: #958e8eff !important; /* solid black */
+    box-shadow: 0 2px 5px rgba(103, 42, 42, 0.3); /* optional shadow */
+
+    {% comment %} z-index: 1030; /* ensures it stays above other content */ {% endcomment %}
 }
 }
 .navbar.navbar-dark.fixed-top {
-    background-color: #000 !important; /* force solid black */
+    background-color: #958f8fff !important; /* force solid black */
     box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-    z-index: 1030; /* ensure it stays above other content */
+    {% comment %} z-index: 1030; /* ensure it stays above other content */ {% endcomment %}
 }
 /* Default border glowing */
 .navbar-nav .nav-link::before {
@@ -88,6 +149,7 @@ body {
 	border-radius: 25px;
 	font-weight: 600;
 	transition: all 0.3s ease-in-out;
+	color:white;
 }
 .btn-primary {
 	background: linear-gradient(90deg, #0d47a1, #1976d2);
@@ -104,7 +166,7 @@ body {
 }
 .btn-outline-primary:hover {
 	background: #1976d2;
-	color: #fff;
+	color: #f6f0f0ff;
 	transform: scale(1.05);
 	box-shadow: 0 3px 10px rgba(0,0,0,0.3);
 }
@@ -248,7 +310,7 @@ footer .col-12 {
   align-items: center;       /* vertically center */
   justify-content:space-around;  /* horizontally center overall */
   gap: 2rem;                 /* space between image and text */
- padding-top:35px;padding: 30px 10px 10px 20px; 
+ padding-top:35px;padding: 30px 10px 10px 100px; 
   position: relative;
  margine: 10px 10px 10px 10px;
 
@@ -264,6 +326,8 @@ footer .col-12 {
   transform: translateY(30px); /* initially 30px niche */
   animation: slideUp 1s ease forwards; /* animate on load */
   animation-delay: 0.3s;      /* optional delay */
+  	margin-top:100px;
+	
 }
 
 @keyframes slideUp {
@@ -336,14 +400,112 @@ footer .col-12 {
 		height: 100%;
 	}
 }
+
+
+
+  .main-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    {% comment %} background: #ffffff; {% endcomment %}
+    padding: 40px;   /* zyada padding */
+    border-radius: 12px;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+    gap: 50px;
+    min-height: 500px; /* height badi */
+    margin-top:50px;
+  }
+
+  /* left side */
+  .left-content {
+    flex: 1;
+  }
+  .left-content h2 {
+    margin: 0 0 85px;
+    font-size: 80px;
+	font-family: 'Poppins', sans-serif; /* stylish font */
+      font-weight: 900; /* extra bold */
+      letter-spacing: 2px; /* thoda space between letters */
+      color: linear-gradient(90deg,rgba(7, 29, 37, 1) 0%, rgba(204, 84, 41, 1) 58%, rgba(237, 221, 83, 1) 100%); /* dark color */
+	  background: linear-gradient(
+    90deg,
+    rgba(8, 19, 24, 1) 0%, 
+    rgba(204, 84, 41, 1) 58%, 
+    rgba(237, 221, 83, 1) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  }
+  .left-content p {
+    margin: 0 0 20px;
+    font-size: 18px;
+  }
+  .left-content button {
+    padding: 12px 25px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  /* right side with overlap */
+  .overlap-container {
+    position: relative;
+    width: 400px;   /* bada size */
+    height: 300px;  /* bada size */
+  }
+  .box1 {
+  {% comment %} position: absolute; {% endcomment %}
+  top: 0;
+  left: 0;
+  width: 400px;
+  height: 200px;
+  border-radius: 12px;
+  background-image: url("https://www.shutterstock.com/image-photo/businesswoman-stress-how-can-they-600nw-2345647365.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding-top:100px;
+}
+
+.box2 {
+  position: absolute;
+  top: 130px;
+  right: 180px;
+  width: 400px;
+  height: 300px;
+  border-radius: 12px;
+  background-image: url("https://t4.ftcdn.net/jpg/03/23/82/99/360_F_323829966_H32wLhoouiPinJ66KyggCvqQ2dFPuuQ1.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
     </style>
 </head>
 <body>
+	<div class="section">
+		 <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+	</div>
     <form id="form1">
         <!-- ✅ Navbar -->
 		<header>
 			<nav class="navbar navbar-expand-md navbar-dark fixed-top">
-				<a class="navbar-brand" href="#"><b>Scheduler</b></a>
+				<a class="navbar-brand" href="#"><b>SchedulerAI</b></a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse">
 					<span class="navbar-toggler-icon"></span>
 				</button>
@@ -361,13 +523,13 @@ footer .col-12 {
 		</header>
 
         <!-- ✅ YouTube Video Background -->
-		<div class="video-container" >
+		{% comment %} <div class="video-container" >
 			<video  src="../static/img/video.mp4"  autoplay muted loop></video>
 
 			<div class="video-overlay">
 				<p><a class="btn btn-primary btn-lg" href="{% url 'login' %}">Generate Timetable</a></p>
 			</div>
-		</div>
+		</div> {% endcomment %}
 
 		<!-- ✅ Jumbotron -->
 		{% comment %} <div class="container jumbotron mt-5">
@@ -380,6 +542,23 @@ footer .col-12 {
 				</div>
 			</div>
 		</div> {% endcomment %}
+
+				<div class="main-box">
+			<!-- Left side -->
+			<div class="left-content">
+			<h2>ScheduloAI</h2>
+			<p>Yahaan text ya details aa sakte hain.</p>
+		<p><a class="btn btn-primary btn-lg" href="{% url 'login' %}">Generate Timetable</a></p>
+			</div>
+
+			<!-- Right side -->
+			<div class="overlap-container">
+			<div class="box1"></div>
+			<div class="box2"></div>
+			</div>
+		</div>
+
+
 		<div>
 			<div class="fourimage">
 				<div class="container1">
