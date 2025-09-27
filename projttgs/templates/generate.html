@@ -15,24 +15,76 @@
     <style>
       body {
   padding-top: 3.5rem;
-  background-color: #f8fafc;
+  background-color: black;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: #2d3436;
 }
 
-nav.navbar {
-  box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+        nav {
+            font-family: sans-serif;
+        }
+
+        .navbar-brand {
+            font-size: 22px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        .jumbotron {
+            background: linear-gradient(135deg, black, black);
+            color: #fff;
+            border-radius: 0.75rem;
+            padding: 3rem 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        .nav-btn {
+  position: relative;
+  padding: 8px 18px !important;
+  margin: 0 6px;
+  color: #fff !important;
+  font-weight: 500;
+  border-radius: 25px;
+  /* background: linear-gradient(135deg, #9d35ff, #762ba8); */
+  transition: all 0.3s ease;
+  overflow: hidden;
+  z-index: 1;
+}
+.active{ 
+	background: #7a3cff; 
+	color: #fff !important;
+	border-radius: 25px;
+	box-shadow: 0 0 15px #7a3cff;
 }
 
-.navbar-brand {
-  font-size: 22px;
-  font-weight: 600;
-  letter-spacing: 1px;
+/* Hover animation effect */
+.nav-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #7a3cff, #7a3cff);
+  transition: 0.4s;
+  z-index: -1;
+  border-radius: 25px;
 }
+.nav-btn:hover::before {
+  left: 0;
+}
+.nav-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 5px #7a3cff, 0 0 20px #7a3cff;
+}
+.nav-btn .active:hover{
+      transform: translateY(2px);
+}
+
 
 .jumbotron {
-  background: linear-gradient(135deg, #2980b9, #6dd5fa, #ffffff);
-  color: #fff;
+  background: linear-gradient(135deg, #5b21ed, #5608d4, #a56fbf);
+  color:white;
   padding: 3rem 2rem;
   border-radius: 12px;
   box-shadow: 0px 6px 18px rgba(0,0,0,0.15);
@@ -68,13 +120,21 @@ nav.navbar {
 .container h2 {
   font-size: 22px;
   font-weight: 600;
-  color: #2c3e50;
+  color: white;
   margin-bottom: 15px;
 }
 
 .container p {
   font-size: 15px;
-  color: #636e72;
+  color:white;
+  line-height: 1.5;
+}
+container1{
+  width: 20vw;
+}
+.container1 p {
+  font-size: 15px;
+  color:black;
   line-height: 1.5;
 }
 
@@ -102,7 +162,7 @@ footer {
 
 /* Primary Button Styling */
 .btn-primary {
-  background: linear-gradient(135deg, #2980b9, #6dd5fa);
+  background: linear-gradient(135deg, #510fe0, #6dd5fa);
   border: none;
   padding: 14px 36px;
   font-size: 16px;
@@ -153,49 +213,29 @@ footer {
 </head>
 <body>
     <form id="form1">
-        <header>
-            <!--Navigation Bar-->
-			<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-                <a class="navbar-brand" href="#"><b>TIMETABLE GENERATOR</b></a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <header style="background-color: black;">
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top " style="background-color: #201c26;">
+                <a class="navbar-brand" href="#"><b>Scheduler.IO</b></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'admindash' %}">Get Started</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'addInstructors' %}">Add Teachers</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'addRooms' %}">Add Rooms</a>
-                    </li>
-                    <li class="nav-item">
-		                <a class="nav-link" href="{% url 'addTimings' %}">Add Timings</a>
-		            </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'addCourses' %}">Add Courses</a>
-                    </li>
-                    <li class="nav-item">
-			            <a class="nav-link" href="{% url 'addDepts' %}">Add Departments</a>
-		            </li>
-                    <li class="nav-item">
-			            <a class="nav-link" href="{% url 'addSections' %}">Add Sections</a>
-		            </li>
-                    <li class="nav-item active">
-			            <a class="nav-link" href="{% url 'generate' %}">Generate Timetable</a>
-		            </li>
-                    <li class="nav-item active">
-			            <a class="nav-link">|</a>
-		            </li>
-                    <li class="nav-item dropdown">
-		                <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Welcome, {{ user.first_name }}</a>
-			            <div class="dropdown-menu" aria-labelledby="dropdown03">
-			                <a class="dropdown-item" href="{% url 'password_change' %}">Change Password</a>
-				            <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
-			            </div>
-		            </li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'admindash' %}">Get Started</a></li>
+                        <li class="nav-item"><a class="nav-link nav-btn" href="{% url 'addInstructors' %}">Add Teachers</a></li>
+                        <li class="nav-item"><a class="nav-link nav-btn" href="{% url 'addRooms' %}">Add Rooms</a></li>
+                        <li class="nav-item"><a class="nav-link nav-btn" href="{% url 'addTimings' %}">Add Timings</a></li>
+                        <li class="nav-item"><a class="nav-link nav-btn" href="{% url 'addCourses' %}">Add Courses</a></li>
+                        <li class="nav-item"><a class="nav-link nav-btn" href="{% url 'addDepts' %}">Add Departments</a></li>
+                        <li class="nav-item"><a class="nav-link nav-btn" href="{% url 'addSections' %}">Add Sections</a></li>
+                        <li class="nav-item active"><a class="nav-link nav-btn" href="{% url 'generate' %}">Generate Timetable</a></li>
+                        <li class="nav-item dropdown">
+		                    <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown">Welcome, {{ user.first_name }}</a>
+			                <div class="dropdown-menu" aria-labelledby="dropdown03">
+			                    <a class="dropdown-item" href="{% url 'password_change' %}">Change Password</a>
+				                <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+			                </div>
+		                </li>
                     </ul>
                 </div>
             </nav>
@@ -212,19 +252,19 @@ footer {
       <p><a href="{% url 'timetable' %}" class="btn btn-primary btn-lg">Click To Generate Timetable&raquo;</a>
     </div>
   </div>
-  <div class="container">
+  <div class="card">
     <div class="row">
-      <div class="col-md-4">
+      <div class="col-md-4" style="color: black;">
         <h2>1. Add Teachers</h2>
         <p>Navigate to the "Add Teachers" section and add the corresponding details. Incorrect Details can also be removed via the "Edit Teacher" option.</p>
 
       </div>
-      <div class="col-md-4">
+      <div class="col-md-4" style="color: black;">
         <h2>2. Add Rooms</h2>
         <p>Navigate to the "Add Rooms" section and add the corresponding details. Incorrect Details can also be removed via the "Edit Rooms" option.</p>
 
       </div>
-      <div class="col-md-4">
+      <div class="col-md-4 " style="color: black;">
         <h2>3. Add Timings</h2>
         <p>Navigate to the "Add Timings" section and add the corresponding details. Incorrect Details can also be removed via the "Edit Timings" option.</p>
 
@@ -232,17 +272,17 @@ footer {
     </div>
     <br>
     <div class="row">
-      <div class="col-md-4">
+      <div class="col-md-4" style="color: black;">
         <h2>4. Add Courses</h2>
         <p>Navigate to the "Add Courses" section and add the corresponding details. Incorrect Details can also be removed via the "Edit Courses" option.</p>
 
       </div>
-      <div class="col-md-4">
+      <div class="col-md-4" style="color: black;">
         <h2>5. Add Departments</h2>
         <p>Navigate to the "Add Departments" section and add the corresponding details. Incorrect Details can also be removed via the "Edit Departments" option.</p>
 
       </div>
-      <div class="col-md-4">
+      <div class="col-md-4" style="color: black;">
         <h2>6. Add Sections</h2>
         <p>Navigate to the "Add Sections" section and add the corresponding details. Incorrect Details can also be removed via the "Edit Sections" option.</p>
 
@@ -251,7 +291,7 @@ footer {
 
      <br>
 
-    <div class="row">
+    <div class="row" style="color: black;">
       <div class="col-md-4">
         <h2>7. Generate Timetable</h2>
         <p>Navigate to the "Generate Timetable" Section and click on Generate Timetable and wait patiently as our algorithm works its magic.</p>

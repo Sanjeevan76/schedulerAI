@@ -6,8 +6,8 @@
   <link href = "{% static "css/base.css" %}" rel="stylesheet">
 </head>
 <body>
-  <div id="header">
-    <span class="logo"><b>TIMETABLE GENERATOR</b></span>
+  <div id="header" style="background-color: black;">
+    <span class="logo" ><a href="{% url 'index' %}"><b>Schedulo.IO</b></a></span>
     {% if request.user.is_authenticated %}
     <ul class="menu">
 

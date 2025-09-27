@@ -27,6 +27,8 @@ body {
   body {
     margin: 0;
     height: 100vh;
+    background-color: #000;
+    
     {% comment %} background: #c3cbd8ff; /* dark bg so blue circles show */ {% endcomment %}
     {% comment %} overflow: hidden; {% endcomment %}
   }
@@ -34,7 +36,7 @@ body {
   .bubble {
     position: absolute;
     bottom: -100px;
-  background: linear-gradient(90deg,rgba(42, 123, 155, 1) 0%, rgba(204, 84, 41, 1) 58%, rgba(237, 221, 83, 1) 100%);
+  background: linear-gradient(90deg,rgb(255, 255, 255) 0%, rgb(190, 101, 252) 58%, rgb(247, 247, 59) 100%);
     border-radius: 50%;
     animation: rise 20s infinite ease-in;
   }
@@ -49,13 +51,13 @@ body {
     width: 25px; height: 25px;
     left: 30%;
     animation-duration: 18s;
-    animation-delay: 3s;
+    animation-delay: 1s;
   }
   .bubble:nth-child(3) {
     width: 60px; height: 60px;
     left: 50%;
     animation-duration: 22s;
-    animation-delay: 5s;
+    animation-delay: 4s;
   }
   .bubble:nth-child(4) {
     width: 20px; height: 20px;
@@ -67,16 +69,16 @@ body {
     width: 50px; height: 50px;
     left: 90%;
     animation-duration: 25s;
-    animation-delay: 7s;
+    animation-delay: 5s;
   }
 
   @keyframes rise {
     0% {
       transform: translateY(0) scale(1);
-      opacity: 0.6;
+      opacity: 1;
     }
     50% {
-      opacity: 0.3;
+      opacity: 0.8;
     }
     100% {
       transform: translateY(-110vh) scale(1.2);
@@ -87,14 +89,14 @@ body {
 /* ✅ Navbar */
 .navbar-nav .nav-link {
 .navbar {
-    background-color: #958e8eff !important; /* solid black */
+    background-color: rgb(0, 0, 0) !important; /* solid black */
     box-shadow: 0 2px 5px rgba(103, 42, 42, 0.3); /* optional shadow */
 
     {% comment %} z-index: 1030; /* ensures it stays above other content */ {% endcomment %}
 }
 }
 .navbar.navbar-dark.fixed-top {
-    background-color: #958f8fff !important; /* force solid black */
+    background-color: rgb(0, 0, 0) !important; /* force solid black */
     box-shadow: 0 2px 5px rgba(0,0,0,0.3);
     {% comment %} z-index: 1030; /* ensure it stays above other content */ {% endcomment %}
 }
@@ -117,23 +119,29 @@ body {
 /* Hover effect */
 .navbar-nav .nav-link:hover {
 	color: #fff !important;
-	{% comment %} border: 2px solid #00e5ff; {% endcomment %}
+	/* {% comment %} border: 2px solid #00e5ff; {% endcomment %}
 	box-shadow: 0 0 12px #00e5ff, 0 0 25px #00e5ff inset;
 	transform: scale(1.05);
-	cursor:pointer;
+	cursor:pointer; */
 }
 
-.navbar-nav .nav-link:hover::before {
+/* .navbar-nav .nav-link:hover::before {
 	opacity: 1;
 	animation: glowMove 4s linear infinite;
-}
+} */
 
 /* Active link style */
 .navbar-nav .active .nav-link {
-	{% comment %} background: #1976d2; {% endcomment %}
+	background: #7a3cff; 
 	color: #fff !important;
 	border-radius: 25px;
-	box-shadow: 0 0 15px #1976d2;
+	box-shadow: 0 0 15px #7a3cff;
+}
+.nav-item:hover{
+  background-color: #7a3cff;
+  color: #fff;
+  border-radius: 20px;
+  box-shadow: 0 0 15px #7a3cff;
 }
 
 /* Gradient animation */
@@ -252,7 +260,7 @@ body {
 .social a {
 	font-size: 30px;
 	margin: 0 15px;
-	color: #333;
+	color: #706f6f;
 	transition: 0.3s;
 }
 .social a:hover {
@@ -262,7 +270,7 @@ body {
 
 /* ✅ Footer */
 footer {
-	background: #0d47a1;
+	background: #350d56;
 	color: #fff;
 	padding: 40px 20px;
 }
@@ -283,9 +291,9 @@ footer .col-12 {
 }
 
 
-//image of 4
 .container1 {
   padding: 2rem;
+  color: #fff;
   border:20px;
 }
 
@@ -313,6 +321,7 @@ footer .col-12 {
  padding-top:35px;padding: 30px 10px 10px 100px; 
   position: relative;
  margin: 10px 10px 10px 10px;
+ color: #fff;
 
 }
 
@@ -426,12 +435,12 @@ footer .col-12 {
 	font-family: 'Poppins', sans-serif; /* stylish font */
       font-weight: 900; /* extra bold */
       letter-spacing: 2px; /* thoda space between letters */
-      color: linear-gradient(90deg,rgba(7, 29, 37, 1) 0%, rgba(204, 84, 41, 1) 58%, rgba(237, 221, 83, 1) 100%); /* dark color */
+      color: linear-gradient(90deg,rgb(203, 200, 219) 0%, rgb(136, 90, 73) 58%, rgb(60, 47, 137) 100%); /* dark color */
 	  background: linear-gradient(
     90deg,
-    rgba(8, 19, 24, 1) 0%, 
-    rgba(204, 84, 41, 1) 58%, 
-    rgba(237, 221, 83, 1) 100%
+    rgb(92, 67, 112) 0%, 
+    rgb(220, 213, 245) 58%, 
+    rgb(187, 2, 255) 100%
   );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -486,12 +495,32 @@ footer .col-12 {
 
 
 .sam-section {
-      background: url('https://www.transparenttextures.com/patterns/crissxcross.png'), #111;
+      /* background: url('https://www.transparenttextures.com/patterns/crissxcross.png'), #111111; */
+
       background-size: cover;
+
       text-align: center;
       padding: 60px 20px;
-	  width: 98%;              /* 90% of total width */
-      margin: 0 auto; 
+	  width: 100%;        
+    height: 80vh;      /* 90% of total width */
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #samdiv{
+      padding-top: 20px;
+      background-color: #201c26;
+      border-radius: 30px;
+      height: 98%;
+      width: 98%;
+      transform: scale(1); /* Start at original size */
+      transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    }
+    #samdiv:hover{
+      box-shadow: 0 0 10px #9d34ff, 0 0 15px #8e15ff inset;
+      transform: scale(1.03); /* Scale up to 110% on hover */
+          box-shadow:0 0 10px #9d34ff,0 0 15px #8e15ff inset,0 8px 12px rgba(0, 0, 0, 0.2);
     }
 
     .sam-section h2 {
@@ -524,7 +553,7 @@ footer .col-12 {
     .sam-box h3 {
       font-size: 26px;
       font-weight: 900;
-      color: #a259ff; /* Purple shade */
+      color: #ede9f3; /* Purple shade */
       margin-bottom: 15px;
     }
 
@@ -553,7 +582,7 @@ footer .col-12 {
       width: 98%;
       max-width: 1400px;
       height: 400px; /* double height */
-      {% comment %} background: linear-gradient(90deg, rgba(42, 123, 155, 1) 0%, rgba(232, 226, 223, 1) 100%, rgba(237, 221, 83, 1) 100%); {% endcomment %}
+/* background: linear-gradient(90deg, rgba(42, 123, 155, 1) 0%, rgba(232, 226, 223, 1) 100%, rgba(237, 221, 83, 1) 100%); */
       padding: 40px;
       border-radius: 20px;
       position: relative;
@@ -574,6 +603,7 @@ footer .col-12 {
 
     /* Left Section */
     .left {
+      color: #fff;
       max-width: 30%;
     }
 
@@ -597,6 +627,7 @@ footer .col-12 {
     .middle {
       text-align: center;
       flex: 1;
+
     }
 
     .middle img {
@@ -608,12 +639,13 @@ footer .col-12 {
       margin-top: -90px;
       font-family: monospace;
       font-size: 0.8rem;
-      color: #333;
+      color: #b2b0b0;
     }
 
     /* Right Section */
     .right {
       max-width: 30%;
+      color: #fff;
     }
 
     .right h2 {
@@ -641,7 +673,7 @@ footer .col-12 {
       left: 0;
       width: 100%;
       transform: rotate(-3deg);
-      background: #7a3cff;
+ background: linear-gradient(to right, #250f38, #9009ff);
       color: #fff;
       font-weight: bold;
       overflow: hidden;
@@ -658,6 +690,90 @@ footer .col-12 {
       0% { transform: translateX(100%); }
       100% { transform: translateX(-100%); }
     }
+
+
+footer {
+  background: #222;
+  color: #fafafa;
+  padding: 21px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+footer .content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+footer .content .logo {
+  font-size: 40px;
+  text-align: center;
+}
+footer .content p {
+  text-align: center;
+  width: 100%;
+  max-width: 500px;
+}
+footer .content .sm,
+footer .content .links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+}
+footer .content .links {
+  flex-wrap: wrap;
+}
+footer .content .sm li {
+  margin: 15px;
+}
+footer .content .links li {
+  margin: 0 12px;
+  margin-bottom: 10px;
+}
+footer .content .links li a,
+footer .content .sm li a {
+  color: #fafafa;
+  transition: 0.3s ease;
+}
+footer .content .sm li a {
+  font-size: 25px;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+}
+footer .content .sm li a:hover {
+  background: #fafafa;
+  color: #222;
+  border-radius: 10px;
+}
+footer .content .links li a:hover {
+  opacity: 0.5;
+}
+footer .copyright {
+  text-align: center;
+  padding-top: 20px;
+  width: 100%;
+  border-top: 1px solid #555;
+}
+@media screen and (max-width: 500px) {
+  footer {
+    width: 100%;
+  }
+  footer .content .logo {
+    font-size: 30px;
+  }
+  footer .content p {
+    padding: 15px;
+  }
+  footer .content .sm li a {
+    padding: 5px;
+  }
+
+
+
     </style>
 </head>
 <body>
@@ -680,7 +796,7 @@ footer .col-12 {
         <!-- ✅ Navbar -->
 		<header>
 			<nav class="navbar navbar-expand-md navbar-dark fixed-top">
-				<a class="navbar-brand" href="#"><b>SchedulerAI</b></a>
+				<a class="navbar-brand" href="{% url 'index' %}"><b>Scheduler.IO</b></a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse">
 					<span class="navbar-toggler-icon"></span>
 				</button>
@@ -710,7 +826,7 @@ footer .col-12 {
 		{% comment %} <div class="container jumbotron mt-5">
 			<div class="row">
 				<div class="col-md-9">
-					<p class="lead">Welcome to Scheduler! A timetable management system for colleges and universities to schedule their organization's timetable. If you face any challenges, feel free to contact us.</p>
+					<p class="lead">Welcome to Schedulo.IO! A timetable management system for colleges and universities to schedule their organization's timetable. If you face any challenges, feel free to contact us.</p>
 				</div>
 				<div class="col-md-3 text-center">
 					<a href="{% url 'contact' %}"><button class="btn btn-outline-primary btn-lg">Contact Us</button></a>
@@ -721,7 +837,7 @@ footer .col-12 {
 				{% comment %} <div class="main-box"> {% endcomment %}
 			<!-- Left side -->
 			<div class="left-content">
-			{% comment %} <h2>ScheduloAI</h2> {% endcomment %}
+			{% comment %} <h2>Schedulo.IO</h2> {% endcomment %}
 			  {% comment %} <h2>YOUR IDEAL SCHEDULE IS JUST A CLICK AWAY</h2>
         <p>From academic timetables to professional agendas, our generator offers structured schedules tailored to your specific needs and preferences.</p>
        
@@ -739,7 +855,7 @@ footer .col-12 {
     <div class="container">
       <!-- Left Section -->
       <div class="left">
-        <h1>WELCOME TO<br>SHEDULOAI</h1>
+        <h1>WELCOME TO<br>SHEDULO.IO</h1>
         <a  class="btn" href="{% url 'login' %}">Let's Start</a>
       </div>
 
@@ -790,7 +906,8 @@ footer .col-12 {
 
 
   <section class="sam-section">
-    <h2 style="font-size: 36px; color: #e8e3e3ff; text-align: center; font-family: Arial, sans-serif; margin-bottom: 20px;">
+    <div id="samdiv">
+      <h2 style="font-size: 36px; color: #e8e3e3ff; text-align: center; font-family: Arial, sans-serif; margin-bottom: 20px;">
       FEATURES WE PROVIDE
     </h2>
 
@@ -817,6 +934,7 @@ footer .col-12 {
       </div>
 
     </div>
+  </div>
   </section>
 
 		
@@ -859,7 +977,7 @@ footer .col-12 {
 		</div>
 
 		<!-- ✅ Footer -->
-		<footer>
+		<!-- <footer>
 			<div class="container">
 				<div class="row text-center">
 					<div class="col-md-4">
@@ -890,7 +1008,34 @@ footer .col-12 {
 					</div>
 				</div>
 			</div>
-		</footer>
+		</footer> -->
+
+
+<footer>
+  <div class="content">
+    <h2 class="logo">Schedulo.io</h2>
+    <p>osidnfjdfskjdfnskjfgnskjdfvnskjdfvnskdvnsdf</p>
+    <ul class="sm">
+      <li><a href="#"><i class="lab la-youtube"></i></a></li>
+      <li><a href="#"><i class="lab la-facebook"></i></a></li>
+      <li><a href="#"><i class="lab la-instagram"></i></a></li>
+      <li><a href="#"><i class="lab la-twitter"></i></a></li>
+      <li><a href="#"><i class="lab la-github"></i></a></li>
+    </ul>
+    <ul class="links">
+      <li><a href="{% url 'index' %}">Home</a></li>
+      <li><a href="{% url 'about' %}">About</a></li>
+      <li><a href="{% url 'contact' %}">Contact Us</a></li>
+      <li><a href="{% url 'login' %}">Login</a></li>
+      <li><a href="{% url 'register' %}">Register</a></li>
+    </ul>
+  </div>
+  <p class="copyright">
+    &copy; <span>2025</span> Schedulo.IO | All Rights Reserved
+  </p>
+</footer>
+
+
     </form>
 	
 	

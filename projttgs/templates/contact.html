@@ -25,13 +25,62 @@ body {
 
 }
 
-nav {
-    font-family: sans-serif;
+/* ✅ Navbar */
+.navbar-nav .nav-link {
+.navbar {
+    background-color: rgb(0, 0, 0) !important; /* solid black */
+    box-shadow: 0 2px 5px rgba(103, 42, 42, 0.3); /* optional shadow */
+
+    {% comment %} z-index: 1030; /* ensures it stays above other content */ {% endcomment %}
+}
+}
+.navbar.navbar-dark.fixed-top {
+    background-color: rgb(0, 0, 0) !important; /* force solid black */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    {% comment %} z-index: 1030; /* ensure it stays above other content */ {% endcomment %}
+}
+/* Default border glowing */
+.navbar-nav .nav-link::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	border-radius: 25px;
+	background: linear-gradient(45deg, #00e5ff, #1976d2, #ff4081);
+	background-size: 300% 300%;
+	opacity: 0;
+	transition: opacity 0.0s;
+	z-index: -1;
 }
 
-.navbar-brand {
-    font-size: 20px;
-    font-family: Georgia, 'Times New Roman', Times, serif;
+/* Hover effect */
+.navbar-nav .nav-link:hover {
+	color: #fff !important;
+	/* {% comment %} border: 2px solid #00e5ff; {% endcomment %}
+	box-shadow: 0 0 12px #00e5ff, 0 0 25px #00e5ff inset;
+	transform: scale(1.05);
+	cursor:pointer; */
+}
+
+/* .navbar-nav .nav-link:hover::before {
+	opacity: 1;
+	animation: glowMove 4s linear infinite;
+} */
+
+/* Active link style */
+.navbar-nav .active .nav-link {
+	background: #7a3cff; 
+	color: #fff !important;
+	border-radius: 25px;
+	box-shadow: 0 0 15px #7a3cff;
+}
+.nav-item:hover{
+  background-color: #7a3cff;
+  color: #fff;
+  border-radius: 20px;
+  box-shadow: 0 0 15px #7a3cff;
 }
 
 
@@ -41,7 +90,7 @@ section{
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: #fff;
+    background: black;
     font-family: sans-serif;
 }
 
@@ -53,7 +102,7 @@ section::before
     left: 0;
     width: 50%;
     height: 100%;
-    background: #fff;
+    background: black;
 
 }
 
@@ -284,49 +333,37 @@ section .container .formBox .inputBox input[type=submit]:hover
 .btn{
     width: 100%;
     color: #fff;
-    background-color: #0b3e70;
+    background-color: #7a3cff;
 }
 
 </style>
 </head>
 <body>
-    <header>
-            <!--Navigation Bar-->
-			<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-                <a class="navbar-brand" href="#"><b>TIMETABLE GENERATOR</b></a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'index' %}">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'about' %}">About Us</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'help' %}">Help</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{% url 'contact' %}">Contact Us</a>
-                    </li>
-                    <li class="nav-item">
-		                <a class="nav-link" href="{% url 'login' %}">Login</a>
-		            </li>
-		            <li class="nav-item">
-			            <a class="nav-link" href="{% url 'register' %}">Sign Up</a>
-		            </li>
-                    </ul>
-                </div>
-            </nav>
-    </header><br>
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top">
+				<a class="navbar-brand" href="{% url 'index' %}"><b>Scheduler.IO</b></a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarCollapse">
+					<ul class="navbar-nav ml-auto">
+						<li class="nav-item"><a class="nav-link" href="{% url 'index' %}">Home</a></li>
+						<li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About Us</a></li>
+						<li class="nav-item"><a class="nav-link" href="{% url 'help' %}">Help</a></li>
+						<li class="nav-item  active"><a class="nav-link" href="{% url 'contact' %}">Contact Us</a></li>
+						<li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+						<li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Sign Up</a></li>
+					</ul>
+				</div>
+			</nav>
+		</header>
     <form method="post" id="form1" action="{% url 'contact' %}">
     {% csrf_token %}
+    
         <section>
         <div class="container">
-            <div class="contactinfo">
-                <div>
+            <div class="contactinfo" style="background-color: #7a3cff;">
+                <div >
                     <h2>Contact Information</h2>
                     <ul class="info">
                         <li>

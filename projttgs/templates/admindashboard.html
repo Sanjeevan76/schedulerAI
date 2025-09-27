@@ -43,10 +43,16 @@
   color: #fff !important;
   font-weight: 500;
   border-radius: 25px;
-  background: linear-gradient(135deg, #ff512f, #f09819);
+  /* background: linear-gradient(135deg, #9d35ff, #762ba8); */
   transition: all 0.3s ease;
   overflow: hidden;
   z-index: 1;
+}
+.active{
+	background: #7a3cff; 
+	color: #fff !important;
+	border-radius: 25px;
+	box-shadow: 0 0 15px #7a3cff;
 }
 
 /* Hover animation effect */
@@ -57,7 +63,7 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, #f09819, #ff512f);
+  background: linear-gradient(135deg, #7a3cff, rgb(123, 34, 182));
   transition: 0.4s;
   z-index: -1;
   border-radius: 25px;
@@ -67,7 +73,7 @@
 }
 .nav-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 0 10px #ff512f, 0 0 20px #f09819;
+  box-shadow: 0 0 10px #400965, 0 0 20px #611b97;
 }
 
         .video-wrapper {
@@ -93,8 +99,15 @@
         border-radius: 0.5rem;
     }
 }
-
-
+        .video-box{
+          padding-top: 10px;
+          border-radius: 3px;
+          height: 100vh;
+          color: white;
+        }
+        .jumbotron{
+          background-color: black;
+        }
         .jumbotron h1 {
             font-size: 2.5rem;
             font-weight: bold;
@@ -106,7 +119,7 @@
         }
 
         .btn-primary {
-            background-color: #0056b3;
+            background-color: black;
             border: none;
             transition: 0.3s;
         }
@@ -131,9 +144,9 @@
 
 
 .card {
-  --grad: red, blue;
+  /* --grad: red, blue; */
   padding: 2.5rem;
-  background-image: linear-gradient(to bottom left, #e0e4e5, #f2f6f9);
+
   border-radius: 2rem;
   gap: 1.5rem;
   display: grid;
@@ -141,7 +154,7 @@
   font-family: system-ui, sans-serif;
   color: #444447;
   box-shadow:
-    inset -2px 2px hsl(0 0 100% / 1),
+    inset -2px 2px hsl(268, 94%, 53%),
     -20px 20px 40px hsl(0 0 0 / .25);
 
   /* put transition on the base so it animates on hover-in and hover-out */
@@ -222,13 +235,13 @@
 .card {
   --grad: red, blue;
   padding: 2.5rem;
-  background-image: linear-gradient(to bottom left, #e5f1f3, #c5dde2);
+  background-image: linear-gradient(to bottom left, #7d3afa, #5d34b0);
   border-radius: 2rem;
   gap: 1.5rem;
   display: grid;
   grid-template: 'title icon' 'content1 content1' 'bar bar' / 1fr auto;
   font-family: system-ui, sans-serif;
-  color: #444447;
+  color: white;
   box-shadow: 
     inset -2px 2px hsl(0 0 100% / 1),
     -20px 20px 40px hsl(0 0 0 / .25) ;
@@ -279,11 +292,11 @@
         }
     </style>
 </head>
-<body>
+<body style="background-color: black;">
     <form id="form1">
-        <header>
-			<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-                <a class="navbar-brand" href="#"><b>Scheduler</b></a>
+        <header style="background-color: black;">
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top " style="background-color: #201c26;">
+                <a class="navbar-brand" href="#"><b>Scheduler.IO</b></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -309,12 +322,12 @@
             </nav>
         </header>
 
-        <main role="main">
-          <div class="jumbotron text-center">
+        <main role="main" style="background-color: black;">
+          <div class="video-box" style="background-color: black;">
     <div class="container">
         <h1 class="display-4">Hello {{ user.first_name }}! 👋</h1>
         <p>
-            Welcome to <b>Scheduler</b>, your timetable management system. 
+            Welcome to <b>Scheduler.IO</b>, your timetable management system. 
             Schedule timetables with ease, save time, and boost efficiency for your organization.
         </p>
 
@@ -388,7 +401,7 @@
             </div>
         </main>
 
-        <footer class="container">
+        <footer class="container" style="background-color: black;">
             <p>&copy; Scheduler. All Rights Reserved</p>
         </footer>
     </form>

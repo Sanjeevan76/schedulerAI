@@ -19,7 +19,7 @@
 body {
     margin: 0;
     height: 100vh;
-    {% comment %} background: #c3cbd8ff; /* dark bg so blue circles show */ {% endcomment %}
+ background: rgb(0, 0, 0);
     {% comment %} overflow: hidden; {% endcomment %}
   }
 
@@ -41,34 +41,34 @@ body {
     width: 25px; height: 25px;
     left: 30%;
     animation-duration: 18s;
-    animation-delay: 3s;
+    animation-delay: 2s;
   }
   .bubble:nth-child(3) {
     width: 60px; height: 60px;
     left: 50%;
     animation-duration: 22s;
-    animation-delay: 5s;
+    animation-delay: 3s;
   }
   .bubble:nth-child(4) {
     width: 20px; height: 20px;
     left: 70%;
     animation-duration: 17s;
-    animation-delay: 2s;
+    animation-delay: 1s;
   }
   .bubble:nth-child(5) {
     width: 50px; height: 50px;
     left: 90%;
     animation-duration: 25s;
-    animation-delay: 7s;
+    animation-delay: 4s;
   }
 
   @keyframes rise {
     0% {
       transform: translateY(0) scale(1);
-      opacity: 0.6;
+      opacity: 1;
     }
     50% {
-      opacity: 0.3;
+      opacity: 0.8;
     }
     100% {
       transform: translateY(-110vh) scale(1.2);
@@ -76,14 +76,84 @@ body {
     }
   }
 
-nav {
-    font-family: sans-serif;
+.navbar-nav .nav-link {
+.navbar {
+    background-color: rgb(0, 0, 0) !important; /* solid black */
+    box-shadow: 0 2px 5px rgba(103, 42, 42, 0.3); /* optional shadow */
+
+    {% comment %} z-index: 1030; /* ensures it stays above other content */ {% endcomment %}
+}
+}
+.navbar.navbar-dark.fixed-top {
+    background-color: rgb(0, 0, 0) !important; /* force solid black */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    {% comment %} z-index: 1030; /* ensure it stays above other content */ {% endcomment %}
+}
+/* Default border glowing */
+.navbar-nav .nav-link::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	border-radius: 25px;
+	background: linear-gradient(45deg, #00e5ff, #1976d2, #ff4081);
+	background-size: 300% 300%;
+	opacity: 0;
+	transition: opacity 0.0s;
+	z-index: -1;
 }
 
-.navbar-brand {
-    font-size: 20px;
-    font-family: Georgia, 'Times New Roman', Times, serif;
+/* Hover effect */
+.navbar-nav .nav-link:hover {
+	color: #fff !important;
+	/* {% comment %} border: 2px solid #00e5ff; {% endcomment %}
+	box-shadow: 0 0 12px #00e5ff, 0 0 25px #00e5ff inset;
+	transform: scale(1.05);
+	cursor:pointer; */
 }
+
+/* .navbar-nav .nav-link:hover::before {
+	opacity: 1;
+	animation: glowMove 4s linear infinite;
+} */
+
+/* Active link style */
+.navbar-nav .active .nav-link {
+	background: #7a3cff; 
+	color: #fff !important;
+	border-radius: 25px;
+	box-shadow: 0 0 15px #7a3cff;
+}
+.nav-item:hover{
+  background-color: #7a3cff;
+  color: #fff;
+  border-radius: 20px;
+  box-shadow: 0 0 15px #7a3cff;
+}
+.jumbotron{
+  color: white;
+  border-radius: 30px;
+  background-color: #201c26;
+}
+.jumbotron h1{
+  color: #7a3cff;
+  opacity: 0.5;
+}
+.jumbotron:hover{
+    box-shadow: 0 0 10px #9d34ff, 0 0 15px #8e15ff inset;
+    transform: scale(1.03); /* Scale up to 110% on hover */
+    box-shadow:0 0 10px #9d34ff,0 0 15px #8e15ff inset,0 8px 12px rgba(0, 0, 0, 0.2);
+}
+.btnn{
+  border-radius: 10px;
+  background-color: #7a3cff;
+  padding: 15px;
+  color: #fff;
+
+}
+
 
 
 
@@ -102,7 +172,7 @@ nav {
       display:flex;
       flex-direction:column;
       align-items:center;
-      background: #f3f4f6;
+      background: #080808;
       color:#111;
     }
     .wrap{
@@ -117,6 +187,7 @@ nav {
       color:#222;
     }
     .grid{
+      width: 100%;
       display:grid;
       grid-template-columns: repeat(3,1fr);
       gap:var(--card-gap);
@@ -132,7 +203,7 @@ nav {
       border-radius:var(--card-radius);
       overflow:hidden;
       box-shadow: 0 6px 18px rgba(18,24,38,0.08);
-      background: #fff;
+      background: #0b0b0b;
       height:320px;
     }
     .card img{
@@ -140,10 +211,10 @@ nav {
       height:100%;
       object-fit:cover;
       display:block;
-      transition:transform .4s ease;
+      transition:transform .5s ease;
     }
     .card:hover img{
-      transform: scale(1.03);
+      transform: scale(1.08);
     }
     .card .title{
       position:absolute;
@@ -217,51 +288,42 @@ nav {
 </head>
 <body>
     <form id="form1">
-        <header>
-            <!--Navigation Bar-->
-			<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-                <a class="navbar-brand" href="#"><b>TIMETABLE GENERATOR</b></a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'index' %}">Home</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{% url 'about' %}">About Us</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'help' %}">Help</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'contact' %}">Contact Us</a>
-                    </li>
-                    <li class="nav-item">
-		                <a class="nav-link" href="{% url 'login' %}">Login</a>
-		            </li>
-		            <li class="nav-item">
-			            <a class="nav-link" href="{% url 'register' %}">Sign Up</a>
-		            </li>
-                    </ul>
-                </div>
-            </nav>
-        </header>
+
+      
+      <!-- old header -->
+
+    <header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top">
+				<a class="navbar-brand" href="{% url 'index' %}"><b>Scheduler.IO</b></a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarCollapse">
+					<ul class="navbar-nav ml-auto">
+						<li class="nav-item "><a class="nav-link" href="{% url 'index' %}">Home</a></li>
+						<li class="nav-item active"><a class="nav-link" href="{% url 'about' %}">About Us</a></li>
+						<li class="nav-item"><a class="nav-link" href="{% url 'help' %}">Help</a></li>
+						<li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact Us</a></li>
+						<li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+						<li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Sign Up</a></li>
+					</ul>
+				</div>
+			</nav>
+		</header>
 
          <main role="main">
 
   <div class="jumbotron">
     <div class="container">
-     <h1 class="display-4" style="color: rgb(42, 123, 155);">About Scheduler</h1>
+     <h1 class="display-4"  style="font-weight: 500">About Scheduler</h1>
 
       <p>Welcome to Scheduler!, a timetable management system for colleges and universities to schedule their organization's timetable. Scheduler started off as a company that formed strong relationships with schools, colleges and universities to help them generate their timetable with
          ease and maximum efficiency and saving the organization's valuable time.
       </p>
-      <p><a class="btn btn-primary btn-lg" href="{% url 'contact' %}" role="button">Contact Us &raquo;</a></p>
+      <p><a class="btnn" href="{% url 'contact' %}" role="button">Contact Us &raquo;</a></p>
     </div>
   </div>
-    <div class="bubble"></div>
+  <div class="bubble"></div>
   <div class="bubble"></div>
   <div class="bubble"></div>
   <div class="bubble"></div>
@@ -276,7 +338,7 @@ nav {
   <div class="bubble"></div>
 	</div>
 
-  <h2 style="color:  rgba(94, 78, 49, 1);">MEET OUR TEAM</h2>
+  <h2 style="color:  rgb(255, 255, 254);">MEET OUR TEAM</h2>
   <div class="wrap">
     <div class="grid">
       <!-- Card 1 -->
@@ -334,7 +396,7 @@ nav {
 
       <!-- Card 5 -->
       <div class="card">
-        <img src="https://i.postimg.cc/qvfbf46K/IMG-20241020-WA0000.jpg" alt="Person 5">
+        <img src="../static/img/tusharr.png" alt="Person 5">
         <div class="overlay">
           <div class="overlay-bg"></div>
           <div class="socials">
@@ -347,7 +409,7 @@ nav {
 
       <!-- Card 6 -->
       <div class="card">
-        <img src="" alt="Person 6">
+        <img src="../static/img/pramodd.jpg" alt="Person 6">
         <div class="overlay">
           <div class="overlay-bg"></div>
           <div class="socials">
@@ -368,21 +430,21 @@ nav {
 
   <div class="container">
 
-    <div class="row">
-      <div class="col-md-4">
-        <h2>User</h2>
+    <div class="row" style="color: #fff;">
+      <div class="col-md-4"  >
+        <h2 style="color: #fff;">Admin Account</h2>
         <p>Scheduler provides User accounts which gives the user the privelage to create, manipulate or delete the organization's timetable.</p>
-        <p><a class="btn btn-secondary" href="{% url 'login' %}" role="button">Sign Up &raquo;</a></p>
+        <p><a class="btnn" href="{% url 'login' %}" role="button">Sign Up &raquo;</a></p>
       </div>
       <div class="col-md-4">
-        <h2>How does it Work?</h2>
+        <h2 style="color: #fff;">How does it Work?</h2>
         <p>Scheduler makes use of a Genetic Algorithm that helps generate the most optimal and suited timetable for your organization's needs.</p>
-        <p><a class="btn btn-secondary" href="{% url 'login' %}" role="button">Generate Timetable &raquo;</a></p>
+        <p><a class="btnn" href="{% url 'login' %}" role="button">Generate Timetable &raquo;</a></p>
       </div>
       <div class="col-md-4">
-        <h2>Terms & Conditions</h2>
+        <h2 style="color: #fff;">Terms & Conditions</h2>
         <p>If your organization has any concerns regarding the system please click below to read our Terms and Conditions.</p>
-        <p><a class="btn btn-secondary" href="{% url 'terms' %}" role="button">Terms & Conditions &raquo;</a></p>
+        <p><a class="btnn" href="{% url 'terms' %}" role="button">Terms & Conditions &raquo;</a></p>
       </div>
     </div>
 
