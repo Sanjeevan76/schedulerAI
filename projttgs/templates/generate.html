@@ -13,16 +13,14 @@
     <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/carousel/">
 
     <style>
-      body {
-  padding-top: 3.5rem;
-  background-color: black;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #2d3436;
-}
-
-        nav {
-            font-family: sans-serif;
+        body {
+            padding-top: 3.5rem;
+            background-color: black;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #2d3436;
         }
+
+        nav { font-family: sans-serif; }
 
         .navbar-brand {
             font-size: 22px;
@@ -31,187 +29,123 @@
         }
 
         .jumbotron {
-            background: linear-gradient(135deg, black, black);
-            color: #fff;
-            border-radius: 0.75rem;
+            background: linear-gradient(135deg, #5b21ed, #5608d4, #a56fbf);
+            color:white;
             padding: 3rem 2rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            border-radius: 12px;
+            box-shadow: 0px 6px 18px rgba(0,0,0,0.15);
         }
 
-        .nav-btn {
-  position: relative;
-  padding: 8px 18px !important;
-  margin: 0 6px;
-  color: #fff !important;
-  font-weight: 500;
-  border-radius: 25px;
-  /* background: linear-gradient(135deg, #9d35ff, #762ba8); */
-  transition: all 0.3s ease;
-  overflow: hidden;
-  z-index: 1;
-}
-.active{ 
-	background: #7a3cff; 
-	color: #fff !important;
-	border-radius: 25px;
-	box-shadow: 0 0 15px #7a3cff;
-}
+        .jumbotron h1 { font-size: 2.5rem; font-weight: 700; }
 
-/* Hover animation effect */
-.nav-btn::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, #7a3cff, #7a3cff);
-  transition: 0.4s;
-  z-index: -1;
-  border-radius: 25px;
-}
-.nav-btn:hover::before {
-  left: 0;
-}
-.nav-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 5px #7a3cff, 0 0 20px #7a3cff;
-}
-.nav-btn .active:hover{
-      transform: translateY(2px);
-}
+        .jumbotron p { font-size: 1.1rem; margin-top: 15px; line-height: 1.6; }
 
+        .btn-primary {
+            background: linear-gradient(135deg, #510fe0, #6dd5fa);
+            border: none;
+            padding: 14px 36px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 50px;   /* pill shape */
+            color: #fff;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
+        }
 
-.jumbotron {
-  background: linear-gradient(135deg, #5b21ed, #5608d4, #a56fbf);
-  color:white;
-  padding: 3rem 2rem;
-  border-radius: 12px;
-  box-shadow: 0px 6px 18px rgba(0,0,0,0.15);
-}
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #1f6391, #2980b9);
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
+        }
 
-.jumbotron h1 {
-  font-size: 2.5rem;
-  font-weight: 700;
-}
+        .btn-primary:active {
+            transform: scale(0.97);
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.25);
+        }
 
-.jumbotron p {
-  font-size: 1.1rem;
-  margin-top: 15px;
-  line-height: 1.6;
-}
+        .btn-primary::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 300%;
+            top: -100%;
+            left: -100%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(25deg);
+            transition: all 0.7s ease;
+        }
 
-.jumbotron .btn-primary {
-  background-color: #1f6391;
-  border: none;
-  padding: 12px 30px;
-  font-size: 16px;
-  border-radius: 6px;
-  transition: all 0.3s ease;
-}
+        .btn-primary:hover::after { left: 100%; }
 
-.jumbotron .btn-primary:hover {
-  background-color: #14507a;
-  transform: translateY(-2px);
-  box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
-}
+        /* Section cards */
+        .container h2 { font-size: 22px; font-weight: 600; color: white; margin-bottom: 15px; }
+        .container p { font-size: 15px; color:white; line-height: 1.5; }
+        .row .col-md-4 {
+            background: #fff;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            box-shadow: 0px 6px 12px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+        .row .col-md-4:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 8px 20px rgba(0,0,0,0.15);
+        }
 
-/* Section cards */
-.container h2 {
-  font-size: 22px;
-  font-weight: 600;
-  color: white;
-  margin-bottom: 15px;
-}
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            border-top: 1px solid #dfe6e9;
+            color: #636e72;
+        }
 
-.container p {
-  font-size: 15px;
-  color:white;
-  line-height: 1.5;
-}
-container1{
-  width: 20vw;
-}
-.container1 p {
-  font-size: 15px;
-  color:black;
-  line-height: 1.5;
-}
+        /* Loading overlay */
+        #loading {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 9999;
+            text-align: center;
+            padding-top: 20%;
+            color: white;
+            font-size: 1.2rem;
+        }
 
-.row .col-md-4 {
-  background: #fff;
-  padding: 25px;
-  margin-bottom: 20px;
-  border-radius: 12px;
-  box-shadow: 0px 6px 12px rgba(0,0,0,0.08);
-  transition: all 0.3s ease;
-}
+        /* Spinner */
+        .spinner {
+            border: 8px solid rgba(255,255,255,0.3);
+            border-top: 8px solid #fff;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 20px auto;
+            animation: spin 1s linear infinite;
+        }
 
-.row .col-md-4:hover {
-  transform: translateY(-5px);
-  box-shadow: 0px 8px 20px rgba(0,0,0,0.15);
-}
-
-footer {
-  text-align: center;
-  padding: 20px;
-  margin-top: 40px;
-  border-top: 1px solid #dfe6e9;
-  color: #636e72;
-}
-
-/* Primary Button Styling */
-.btn-primary {
-  background: linear-gradient(135deg, #510fe0, #6dd5fa);
-  border: none;
-  padding: 14px 36px;
-  font-size: 16px;
-  font-weight: 600;
-  border-radius: 50px;   /* pill shape */
-  color: #fff;
-  letter-spacing: 0.5px;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.4s ease;
-  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
-}
-
-/* Hover effect */
-.btn-primary:hover {
-  background: linear-gradient(135deg, #1f6391, #2980b9);
-  transform: translateY(-3px) scale(1.03);
-  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
-}
-
-/* Active/Clicked effect */
-.btn-primary:active {
-  transform: scale(0.97);
-  box-shadow: 0px 4px 10px rgba(0,0,0,0.25);
-}
-
-/* Ripple effect */
-.btn-primary::after {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 300%;
-  top: -100%;
-  left: -100%;
-  background: rgba(255, 255, 255, 0.2);
-  transform: rotate(25deg);
-  transition: all 0.7s ease;
-}
-
-.btn-primary:hover::after {
-  left: 100%;
-}
-
-
+        @keyframes spin {
+            0% { transform: rotate(0deg);}
+            100% { transform: rotate(360deg);}
+        }
     </style>
-
 </head>
 <body>
+
+    <!-- Loading overlay -->
+    <div id="loading">
+        <div class="spinner"></div>
+        <p>Generating Timetable, please wait...</p>
+    </div>
+
     <form id="form1">
         <header style="background-color: black;">
 			<nav class="navbar navbar-expand-md navbar-dark fixed-top " style="background-color: #201c26;">
@@ -243,75 +177,71 @@ footer {
 
          <main role="main">
 
-  <div class="jumbotron">
-    <div class="container">
-      <h1 class="display-4">Scheduler | Generate Timetable</h1>
-      <p>Please make sure you have entered the correct information for the Teachers, Rooms, Timings, Courses, Sections and Departments
-        into the system. If you have not entered all the information yet please refer below on how to go about feeding all the information into the system.
-          Once confirmed please click on the "Generate Timetable" button below and wait patiently as TTGS generates your timetable for you.</p>
-      <p><a href="{% url 'timetable' %}" class="btn btn-primary btn-lg">Click To Generate Timetable&raquo;</a>
-    </div>
-  </div>
-  <div class="card">
-    <div class="row">
-      <div class="col-md-4" style="color: black;">
-        <h2>1. Add Teachers</h2>
-        <p>Navigate to the "Add Teachers" section and add the corresponding details. Incorrect Details can also be removed via the "Edit Teacher" option.</p>
+          <div class="jumbotron">
+            <div class="container">
+              <h1 class="display-4">Scheduler | Generate Timetable</h1>
+              <p>Please make sure you have entered the correct information for the Teachers, Rooms, Timings, Courses, Sections and Departments
+                into the system. Once confirmed, click on the button below and wait patiently as TTGS generates your timetable.</p>
+              <p><a href="{% url 'timetable' %}" class="btn btn-primary btn-lg">Click To Generate Timetable &raquo;</a></p>
+            </div>
+          </div>
 
-      </div>
-      <div class="col-md-4" style="color: black;">
-        <h2>2. Add Rooms</h2>
-        <p>Navigate to the "Add Rooms" section and add the corresponding details. Incorrect Details can also be removed via the "Edit Rooms" option.</p>
+          <div class="card">
+            <div class="row">
+              <div class="col-md-4" style="color: black;">
+                <h2>1. Add Teachers</h2>
+                <p>Navigate to the "Add Teachers" section and add the corresponding details. Incorrect Details can also be removed via the "Edit Teacher" option.</p>
+              </div>
+              <div class="col-md-4" style="color: black;">
+                <h2>2. Add Rooms</h2>
+                <p>Navigate to the "Add Rooms" section and add the corresponding details. Incorrect Details can also be removed via the "Edit Rooms" option.</p>
+              </div>
+              <div class="col-md-4" style="color: black;">
+                <h2>3. Add Timings</h2>
+                <p>Navigate to the "Add Timings" section and add the corresponding details. Incorrect Details can also be removed via the "Edit Timings" option.</p>
+              </div>
+            </div>
 
-      </div>
-      <div class="col-md-4 " style="color: black;">
-        <h2>3. Add Timings</h2>
-        <p>Navigate to the "Add Timings" section and add the corresponding details. Incorrect Details can also be removed via the "Edit Timings" option.</p>
+            <div class="row">
+              <div class="col-md-4" style="color: black;">
+                <h2>4. Add Courses</h2>
+                <p>Navigate to the "Add Courses" section and add the corresponding details. Incorrect Details can also be removed via the "Edit Courses" option.</p>
+              </div>
+              <div class="col-md-4" style="color: black;">
+                <h2>5. Add Departments</h2>
+                <p>Navigate to the "Add Departments" section and add the corresponding details. Incorrect Details can also be removed via the "Edit Departments" option.</p>
+              </div>
+              <div class="col-md-4" style="color: black;">
+                <h2>6. Add Sections</h2>
+                <p>Navigate to the "Add Sections" section and add the corresponding details. Incorrect Details can also be removed via the "Edit Sections" option.</p>
+              </div>
+            </div>
 
-      </div>
-    </div>
-    <br>
-    <div class="row">
-      <div class="col-md-4" style="color: black;">
-        <h2>4. Add Courses</h2>
-        <p>Navigate to the "Add Courses" section and add the corresponding details. Incorrect Details can also be removed via the "Edit Courses" option.</p>
+            <div class="row" style="color: black;">
+              <div class="col-md-4">
+                <h2>7. Generate Timetable</h2>
+                <p>Navigate to the "Generate Timetable" Section and click on Generate Timetable and wait patiently as our algorithm works its magic.</p>
+              </div>
+            </div>
 
-      </div>
-      <div class="col-md-4" style="color: black;">
-        <h2>5. Add Departments</h2>
-        <p>Navigate to the "Add Departments" section and add the corresponding details. Incorrect Details can also be removed via the "Edit Departments" option.</p>
+          </div>
+        </main>
 
-      </div>
-      <div class="col-md-4" style="color: black;">
-        <h2>6. Add Sections</h2>
-        <p>Navigate to the "Add Sections" section and add the corresponding details. Incorrect Details can also be removed via the "Edit Sections" option.</p>
-
-      </div>
-    </div>
-
-     <br>
-
-    <div class="row" style="color: black;">
-      <div class="col-md-4">
-        <h2>7. Generate Timetable</h2>
-        <p>Navigate to the "Generate Timetable" Section and click on Generate Timetable and wait patiently as our algorithm works its magic.</p>
-      </div>
-
-      </div>
-    </div>
-
-    <hr>
-
-  </div>
-
-</main>
-
-<footer class="container">
-  <p>&copy;  All Rights Reserved</p>
-</footer>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-      <script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')</script><script src="../assets/dist/js/bootstrap.bundle.js"></script>
+        <footer class="container">
+          <p>&copy;  All Rights Reserved</p>
+        </footer>
 
     </form>
+
+    <!-- JS to show loading -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const generateBtn = document.querySelector('.btn-primary');
+            generateBtn.addEventListener('click', function(e) {
+                // Show loading overlay
+                document.getElementById('loading').style.display = 'block';
+            });
+        });
+    </script>
 </body>
 </html>

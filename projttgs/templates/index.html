@@ -3,7 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>TTGS | Timetable Generation System</title>
+	<title>Schedulo.IO</title>
+  <link rel="icon" type="image/png" href="static/img/logo.jpeg">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
@@ -15,6 +16,7 @@
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
     <style>
+      
 		/* General */
 body {
 	font-family: 'Helvetica ', sans-serif;
@@ -773,10 +775,17 @@ footer .copyright {
   }
 
 
+ 
+
 
     </style>
 </head>
 <body>
+
+    
+
+
+
 	<div class="section">
 		 <div class="bubble"></div>
   <div class="bubble"></div>
@@ -796,7 +805,15 @@ footer .copyright {
         <!-- ✅ Navbar -->
 		<header>
 			<nav class="navbar navbar-expand-md navbar-dark fixed-top">
-				<a class="navbar-brand" href="{% url 'index' %}"><b>Scheduler.IO</b></a>
+		<a class="navbar-brand d-flex align-items-center" href="{% url 'index' %}">
+    <!-- Circular Image -->
+    <img src="static/img/logo.jpeg" 
+         alt="Logo" 
+         width="35" height="35" 
+         class="rounded-circle me-2">
+    <b>Schedulo.IO</b>
+</a>
+
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse">
 					<span class="navbar-toggler-icon"></span>
 				</button>
@@ -893,7 +910,7 @@ footer .copyright {
 					</div>
 			  </div>
 			  <div class="container1">
-				  <h1 class="shedulo-heading">SheduloAI</h1>
+				  <h1 class="shedulo-heading">Shedulo.IO</h1>
               <p class="shedulo-text">SheduloAI is an intelligent timetable generator that helps schools and colleges create optimized schedules effortlessly. Using AI techniques like Genetic Algorithms and Particle Swarm Optimization (PSO), it automatically assigns classes, balances workloads, and ensures teachers’ and students’ time is efficiently managed. These optimization methods help generate conflict-free, efficient, and flexible timetables in minimal time.</p>
 			  </div>
 			</div>

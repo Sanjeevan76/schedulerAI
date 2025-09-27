@@ -3,7 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>TTGS | Get Started</title>
+		<title>Schedulo.IO</title>
+  <link rel="icon" type="image/png" href="static/img/logo.jpeg">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
@@ -290,13 +291,192 @@
             color: #ddd;
             border-radius: 0.5rem;
         }
+
+
+
+
+        .main-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 6px 16px rgba(148, 55, 55, 0.15);
+    gap: 50px;
+    min-height: 500px;
+    margin-top:50px;
+
+    /* Animated moving purple border */
+    border: 2px solid purple;
+    position: relative;
+    z-index: 0;
+}
+
+.main-box::before {
+    content: '';
+    position: absolute;
+    top: -2px; left: -2px; bottom: -2px; right: -2px;
+    border-radius: 12px;
+    padding: 2px;
+    {% comment %} background: linear-gradient(270deg, #9b30ff, #d05aff, #9b30ff); {% endcomment %}
+    background-size: 600% 600%;
+    animation: movingGlow 4s linear infinite;
+    z-index: -1;
+}
+
+@keyframes movingGlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+
+  /* left side */
+  .left-content {
+    flex: 1;
+  }
+  .left-content h2 {
+    margin: 0 0 85px;
+    font-size: 50px;
+	font-family: 'Poppins', sans-serif; /* stylish font */
+      font-weight: 900; /* extra bold */
+      letter-spacing: 2px; /* thoda space between letters */
+      color: linear-gradient(90deg,rgb(203, 200, 219) 0%, rgb(136, 90, 73) 58%, rgb(60, 47, 137) 100%); /* dark color */
+	  background: linear-gradient(
+    90deg,
+    rgb(92, 67, 112) 0%, 
+    rgb(220, 213, 245) 58%, 
+    rgb(187, 2, 255) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  }
+  .left-content p {
+    margin: 0 0 20px;
+    font-size: 18px;
+    color:white;
+  }
+
+   .left-content h3 {
+    margin: 0 0 20px;
+    font-size: 18px;
+    color:purple;
+  }
+  .left-content button {
+    padding: 12px 25px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  /* right side with overlap */
+  .overlap-container {
+    position: relative;
+    width: 400px;   /* bada size */
+    height: 300px;  /* bada size */
+  }
+  .box1 {
+  {% comment %} position: absolute; {% endcomment %}
+  top: 0;
+  left: 0;
+  width: 400px;
+  height: 200px;
+  border-radius: 12px;
+  background-image: url("https://www.shutterstock.com/image-photo/businesswoman-stress-how-can-they-600nw-2345647365.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding-top:100px;
+}
+
+.box2 {
+  position: absolute;
+  top: 130px;
+  right: 100px;
+  width: 400px;
+  height: 300px;
+  border-radius: 12px;
+  background-image: url("https://images.unsplash.com/photo-1514782831304-632d84503f6f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1MTUzNXwwfDF8c2VhcmNofDJ8fCUyMlNjaGVkdWxpbmclMjJ8ZW58MHx8fHwxNzU4NjUwMTI2fDA&ixlib=rb-4.1.0&q=80&w=1080");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+
+
+ body {
+    margin: 0;
+    height: 100vh;
+    background-color: #000;
+    
+    {% comment %} background: #c3cbd8ff; /* dark bg so blue circles show */ {% endcomment %}
+    {% comment %} overflow: hidden; {% endcomment %}
+  }
+
+  .bubble {
+    position: absolute;
+    bottom: -100px;
+  background: linear-gradient(90deg,rgb(255, 255, 255) 0%, rgb(190, 101, 252) 58%, rgb(247, 247, 59) 100%);
+    border-radius: 50%;
+    animation: rise 20s infinite ease-in;
+  }
+
+  /* random size/position for multiple bubbles */
+  .bubble:nth-child(1) {
+    width: 40px; height: 40px;
+    left: 10%;
+    animation-duration: 15s;
+  }
+  .bubble:nth-child(2) {
+    width: 25px; height: 25px;
+    left: 30%;
+    animation-duration: 18s;
+    animation-delay: 1s;
+  }
+  .bubble:nth-child(3) {
+    width: 60px; height: 60px;
+    left: 50%;
+    animation-duration: 22s;
+    animation-delay: 4s;
+  }
+  .bubble:nth-child(4) {
+    width: 20px; height: 20px;
+    left: 70%;
+    animation-duration: 17s;
+    animation-delay: 2s;
+  }
+  .bubble:nth-child(5) {
+    width: 50px; height: 50px;
+    left: 90%;
+    animation-duration: 25s;
+    animation-delay: 5s;
+  }
+
+  @keyframes rise {
+    0% {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.8;
+    }
+    100% {
+      transform: translateY(-110vh) scale(1.2);
+      opacity: 0;
+    }
+  }
+
     </style>
 </head>
 <body style="background-color: black;">
     <form id="form1">
         <header style="background-color: black;">
 			<nav class="navbar navbar-expand-md navbar-dark fixed-top " style="background-color: #201c26;">
-                <a class="navbar-brand" href="#"><b>Scheduler.IO</b></a>
+                <a class="navbar-brand" href="#"><b>Schedulo.IO</b></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -322,39 +502,52 @@
             </nav>
         </header>
 
-        <main role="main" style="background-color: black;">
-          <div class="video-box" style="background-color: black;">
-    <div class="container">
-        <h1 class="display-4">Hello {{ user.first_name }}! 👋</h1>
-        <p>
-            Welcome to <b>Scheduler.IO</b>, your timetable management system. 
-            Schedule timetables with ease, save time, and boost efficiency for your organization.
-        </p>
+        	 <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+	</div>
 
-        <!-- Responsive Video -->
-        <div class="video-wrapper mb-4">
-            <video autoplay muted loop playsinline>
-                <!-- yaha direct path use karo -->
-                <source src="/static/img/v.mp4" type="video/mp4">
-                <!-- ya phir same folder me hai to -->
-                <!-- <source src="demo.mp4" type="video/mp4"> -->
-                Your browser does not support the video tag.
-            </video>
-        </div>
 
-        <p>
-            <a class="btn btn-light btn-lg" href="{% url 'addInstructors' %}" role="button">Get Started &raquo;</a>
-            <a class="btn btn-outline-light btn-lg" href="{% url 'contact' %}" role="button">Contact Us &raquo;</a>
-        </p>
-    </div>
-</div>
 
-            </div>
+        
+
+          
+
+		 <div class="main-box"> 
+			<!-- Left side -->
+			<div class="left-content">
+			 <h2>Schedulo.IO</h2> 
+			  <h3>YOUR IDEAL SCHEDULE IS JUST A CLICK AWAY</h3>
+        <p>From academic timetables to professional agendas,<br> our generator offers 
+           structured schedules tailored to your<br> specific needs and preferences.</p>
+       
+		<p><a class="btn btn-primary btn-lg" href="{% url 'addInstructors' %}" style="background-color:blue;">START MAGIC</a></p>
+		{% comment %} <p><a class="btn btn-primary btn-lg" href="{% url 'addInstructors' %}" style="background-color:blue;">START MAGIC</a></p> {% endcomment %}
+			</div> 
+
+			<!-- Right side -->
+			 <div class="overlap-container">
+			<div class="box1"></div>
+			<div class="box2"></div>
+			</div>
+		</div> 
+    <br>
+    <br>
 
             <div class="container">
                    <div class="grid-container">
   <div class="card">
-    <div class="title">Programming</div>
+    <div class="title">ADD TEACHER</div>
     <div class="icon"><i class="fa-thin fa-laptop-code"></i></div>
     <div class="content1">
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, voluptatum. Magni hic, voluptate debitis esse corporis dolor laudantium quae quo!</p>
@@ -362,14 +555,14 @@
   </div>
   
   <div class="card">
-    <div class="title">Security</div>
+    <div class="title">ROOMS</div>
     <div class="icon"><i class="fa-thin fa-shield-check"></i></div>
     <div class="content1">
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, voluptatum. Magni hic, voluptate debitis esse corporis dolor laudantium quae quo!</p>
     </div>
   </div>
     <div class="card">
-    <div class="title">Security</div>
+    <div class="title">TIMING</div>
     <div class="icon"><i class="fa-thin fa-shield-check"></i></div>
     <div class="content1">
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, voluptatum. Magni hic, voluptate debitis esse corporis dolor laudantium quae quo!</p>
