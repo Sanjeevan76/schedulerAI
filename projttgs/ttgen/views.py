@@ -246,10 +246,10 @@ def contact(request):
     if request.method == 'POST':
         message = request.POST['message']
 
-        send_mail('TTGS Contact',
+        send_mail(' Contact',
                   message,
                   settings.EMAIL_HOST_USER,
-                  ['codevoid12@gmail.com'],
+                  ['studyyou40@gmail.com'],
                   fail_silently=False)
     return render(request, 'contact.html', {})
 

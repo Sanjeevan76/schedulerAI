@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>TTGS | Help</title>
@@ -10,158 +9,129 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 	<script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
-    <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/carousel/">
-    <link href="static/css/help.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
     <style>
         body {
-    padding-top: 3rem;
-    padding-bottom: 3rem;
-    background-color: black;
-    color: #5a5a5a;
-    font-family: 'Poppins', sans-serif;
-    overflow-x: hidden;
-}
+            padding-top: 3rem;
+            padding-bottom: 3rem;
+            background-color: black;
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            color: white;
+        }
 
-  .bubble {
-    position: absolute;
-    bottom: -100px;
-  background: linear-gradient(90deg,rgba(42, 123, 155, 1) 0%, rgba(204, 84, 41, 1) 58%, rgba(237, 221, 83, 1) 100%);
-    border-radius: 50%;
-    animation: rise 20s infinite ease-in;
-  }
+        /* ✅ Navbar */
+        .navbar {
+            background-color: black !important;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        .nav-item:hover{
+            background-color: #7a3cff;
+            border-radius: 20px;
+            box-shadow: 0 0 15px #7a3cff;
+        }
+        .navbar-nav .active .nav-link {
+            background: #7a3cff; 
+            color: #fff !important;
+            border-radius: 25px;
+            box-shadow: 0 0 15px #7a3cff;
+        }
 
-  /* random size/position for multiple bubbles */
-  .bubble:nth-child(1) {
-    width: 40px; height: 40px;
-    left: 10%;
-    animation-duration: 15s;
-  }
-  .bubble:nth-child(2) {
-    width: 25px; height: 25px;
-    left: 30%;
-    animation-duration: 18s;
-    animation-delay: 2s;
-  }
-  .bubble:nth-child(3) {
-    width: 60px; height: 60px;
-    left: 50%;
-    animation-duration: 22s;
-    animation-delay: 3s;
-  }
-  .bubble:nth-child(4) {
-    width: 20px; height: 20px;
-    left: 70%;
-    animation-duration: 17s;
-    animation-delay: 1s;
-  }
-  .bubble:nth-child(5) {
-    width: 50px; height: 50px;
-    left: 90%;
-    animation-duration: 25s;
-    animation-delay: 4s;
-  }
+        .pricing-header {
+            max-width: 700px;
+        }
 
-  @keyframes rise {
-    0% {
-      transform: translateY(0) scale(1);
-      opacity: 1;
-    }
-    50% {
-      opacity: 0.8;
-    }
-    100% {
-      transform: translateY(-110vh) scale(1.2);
-      opacity: 0;
-    }
-  }
+        /* ✅ Timeline */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: auto;
+            padding: 40px 0;
+            z-index: 2;
+        }
 
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background: #7a3cff;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+            border-radius: 3px;
+        }
 
-/* ✅ Navbar */
-.navbar-nav .nav-link {
-.navbar {
-    background-color: rgb(0, 0, 0) !important; /* solid black */
-    box-shadow: 0 2px 5px rgba(103, 42, 42, 0.3); /* optional shadow */
+        .timeline-item {
+            padding: 20px 30px;
+            position: relative;
+            background: #111;
+            border-radius: 10px;
+            width: 45%;
+            margin-bottom: 40px;
+            box-shadow: 0 0 15px rgba(122,60,255,0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
 
-    {% comment %} z-index: 1030; /* ensures it stays above other content */ {% endcomment %}
-}
-}
-.navbar.navbar-dark.fixed-top {
-    background-color: rgb(0, 0, 0) !important; /* force solid black */
-    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-    {% comment %} z-index: 1030; /* ensure it stays above other content */ {% endcomment %}
-}
-/* Default border glowing */
-.navbar-nav .nav-link::before {
-	content: "";
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	border-radius: 25px;
-	background: linear-gradient(45deg, #00e5ff, #1976d2, #ff4081);
-	background-size: 300% 300%;
-	opacity: 0;
-	transition: opacity 0.0s;
-	z-index: -1;
-}
+        .timeline-item:hover {
+            transform: scale(1.08);
+            box-shadow: 0 0 30px rgba(122,60,255,0.9);
+        }
 
-/* Hover effect */
-.navbar-nav .nav-link:hover {
-	color: #fff !important;
-	/* {% comment %} border: 2px solid #00e5ff; {% endcomment %}
-	box-shadow: 0 0 12px #00e5ff, 0 0 25px #00e5ff inset;
-	transform: scale(1.05);
-	cursor:pointer; */
-}
+        .timeline-item.left { left: 0; }
+        .timeline-item.right { left: 55%; }
 
-/* .navbar-nav .nav-link:hover::before {
-	opacity: 1;
-	animation: glowMove 4s linear infinite;
-} */
+        .timeline-item::before {
+            content: attr(data-step);
+            position: absolute;
+            top: 15px;
+            width: 40px;
+            height: 40px;
+            background: #7a3cff;
+            border-radius: 50%;
+            color: #fff;
+            text-align: center;
+            line-height: 40px;
+            font-weight: bold;
+            box-shadow: 0 0 10px #7a3cff;
+        }
 
-/* Active link style */
-.navbar-nav .active .nav-link {
-	background: #7a3cff; 
-	color: #fff !important;
-	border-radius: 25px;
-	box-shadow: 0 0 15px #7a3cff;
-}
-.nav-item:hover{
-  background-color: #7a3cff;
-  color: #fff;
-  border-radius: 20px;
-  box-shadow: 0 0 15px #7a3cff;
-}
+        .timeline-item.left::before { right: -60px; }
+        .timeline-item.right::before { left: -60px; }
 
+        .timeline-item h4 {
+            color: #7a3cff;
+            margin-bottom: 10px;
+        }
 
-@media (min-width: 768px) {
-    html {
-        font-size: 16px;
-    }
-}
+        .timeline-item i {
+            font-size: 30px;
+            margin-right: 10px;
+            color: #7a3cff;
+        }
 
-.container {
-    max-width: 960px;
-    color:white;
-}
+        /* ✅ Bubbles */
+        .bubble {
+            position: absolute;
+            bottom: -100px;
+            background: linear-gradient(90deg,rgba(42, 123, 155, 1) 0%, rgba(204, 84, 41, 1) 58%, rgba(237, 221, 83, 1) 100%);
+            border-radius: 50%;
+            animation: rise 20s infinite ease-in;
+            z-index: 1;
+        }
 
-.pricing-header {
-    max-width: 700px;
-}
+        .bubble:nth-child(1) { width: 40px; height: 40px; left: 10%; animation-duration: 15s; }
+        .bubble:nth-child(2) { width: 25px; height: 25px; left: 30%; animation-duration: 18s; animation-delay: 2s; }
+        .bubble:nth-child(3) { width: 60px; height: 60px; left: 50%; animation-duration: 22s; animation-delay: 3s; }
+        .bubble:nth-child(4) { width: 20px; height: 20px; left: 70%; animation-duration: 17s; animation-delay: 1s; }
+        .bubble:nth-child(5) { width: 50px; height: 50px; left: 90%; animation-duration: 25s; animation-delay: 4s; }
 
-.card-deck .card {
-    min-width: 220px;
-}
-
-.themed-container {
-    padding: 15px;
-    margin-bottom: 30px;
-    background-color: rgba(0, 123, 255, .15);
-    border: 1px solid rgba(0, 123, 255, .2);
-}
-
+        @keyframes rise {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            50% { opacity: 0.8; }
+            100% { transform: translateY(-110vh) scale(1.2); opacity: 0; }
+        }
 
     </style>
 </head>
@@ -169,50 +139,74 @@
     <form id="form1">
         <header>
 			<nav class="navbar navbar-expand-md navbar-dark fixed-top">
-				<a class="navbar-brand" href="{% url 'index' %}"><b>Scheduler.IO</b></a>
+				<a class="navbar-brand" href="#"><b>Scheduler.IO</b></a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse">
 					<span class="navbar-toggler-icon"></span>
 				</button>
 				<div class="collapse navbar-collapse" id="navbarCollapse">
 					<ul class="navbar-nav ml-auto">
-						<li class="nav-item "><a class="nav-link" href="{% url 'index' %}">Home</a></li>
+						<li class="nav-item"><a class="nav-link" href="#">Home</a></li>
 						<li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About Us</a></li>
-						<li class="nav-item active"><a class="nav-link" href="{% url 'help' %}">Help</a></li>
-						<li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact Us</a></li>
-						<li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
-						<li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Sign Up</a></li>
+						<li class="nav-item active"><a class="nav-link" href="#">Help</a></li>
+						<li class="nav-item"><a class="nav-link" href="#">Contact Us</a></li>
+						<li class="nav-item"><a class="nav-link" href="#">Login</a></li>
+						<li class="nav-item"><a class="nav-link" href="#">Sign Up</a></li>
 					</ul>
 				</div>
 			</nav>
 		</header>
+
+        <!-- ✅ Bubbles -->
         <div class="bubble"></div>
-  <div class="bubble"></div>
-  <div class="bubble"></div>
-  <div class="bubble"></div>
-  <div class="bubble"></div>
-  <div class="bubble"></div>
-  <div class="bubble"></div>
-  <div class="bubble"></div>
-  <div class="bubble"></div>
-  <div class="bubble"></div>
-  <div class="bubble"></div>
-  <div class="bubble"></div>
-  <div class="bubble"></div>
-	</div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+
         <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
             <h1 class="display-4" style="color: #7a3cff;">How to use Scheduler?</h1>
-            <p class="lead" style="color: white;">Please find below the Steps for Users to go about the Timetable Generation System. If you have any queries please <a href="{% url 'contact' %}">Contact Us</a></p>
+            <p class="lead" style="color: white;">Follow these steps to generate your timetable easily.</p>
         </div>
 
-        <div class="container themed-container">1. Log into the System using your account to start generating the timetable</div>
-        <div class="container themed-container">2. Input the Information for the Courses</div>
-        <div class="container themed-container">3. Input the Information for the Teachers</div>
-        <div class="container themed-container">4. Input the Information for the Rooms</div>
-        <div class="container themed-container">5. Input the Information for the Timings</div>
-        <div class="container themed-container">6. Input the Information for the Departments</div>
-        <div class="container themed-container">7. Input the Information for the Sections</div>
-        <div class="container themed-container">8. Click on Home and then Click on "Generate Timetable"</div>
-        <div class="container themed-container">9. The Timetable can then be downloaded as a PDF Document</div>
+        <!-- ✅ Timeline -->
+        <div class="timeline">
+            <div class="timeline-item left" data-step="1">
+                <h4><i class="fas fa-sign-in-alt"></i> Login</h4>
+                <p>Log into the system using your account to start generating the timetable.</p>
+            </div>
+            <div class="timeline-item right" data-step="2">
+                <h4><i class="fas fa-book"></i> Courses</h4>
+                <p>Input the information for the Courses.</p>
+            </div>
+            <div class="timeline-item left" data-step="3">
+                <h4><i class="fas fa-chalkboard-teacher"></i> Teachers</h4>
+                <p>Input the information for the Teachers.</p>
+            </div>
+            <div class="timeline-item right" data-step="4">
+                <h4><i class="fas fa-door-open"></i> Rooms</h4>
+                <p>Input the information for the Rooms.</p>
+            </div>
+            <div class="timeline-item left" data-step="5">
+                <h4><i class="far fa-clock"></i> Timings</h4>
+                <p>Input the information for the Timings.</p>
+            </div>
+            <div class="timeline-item right" data-step="6">
+                <h4><i class="fas fa-building"></i> Departments</h4>
+                <p>Input the information for the Departments.</p>
+            </div>
+            <div class="timeline-item left" data-step="7">
+                <h4><i class="fas fa-users"></i> Sections</h4>
+                <p>Input the information for the Sections.</p>
+            </div>
+            <div class="timeline-item right" data-step="8">
+                <h4><i class="fas fa-cogs"></i> Generate</h4>
+                <p>Click on Home and then click on "Generate Timetable".</p>
+            </div>
+            <div class="timeline-item left" data-step="9">
+                <h4><i class="fas fa-file-pdf"></i> Download</h4>
+                <p>The Timetable can then be downloaded as a PDF Document.</p>
+            </div>
+        </div>
     </form>
 </body>
 </html>

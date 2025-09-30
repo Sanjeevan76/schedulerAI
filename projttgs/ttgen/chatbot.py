@@ -24,3 +24,10 @@ trainer_corpus = ChatterBotCorpusTrainer(chatbot)
 trainer_corpus.train(
     'chatterbot.corpus.english'
 )
+
+while True:
+    query = input("You: ")
+    if query.lower() == "exit":
+        break
+    response = chatbot.get_response(query)
+    print("Bot:", response)
