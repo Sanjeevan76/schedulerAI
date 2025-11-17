@@ -82,7 +82,7 @@ class Schedule:
 
             for course in courses:
                 for _ in range(repeat):
-                    crs_inst = course.instructors.all()
+                    crs_inst = course.instructors.all() #teacher
                     newClass = Class(self._classNumb, dept, section.section_id, course)
                     self._classNumb += 1
 
@@ -252,35 +252,71 @@ def context_manager(schedule):
     return context
 
 
-# TIMETABLE GENERATION VIEW
 
+# TIMETABLE GENERATION VIEW
 def timetable(request):
     population = Population(POPULATION_SIZE)
-    population.get_schedules().sort(key=lambda x: x.get_fitness(), reverse=True)
     geneticAlgorithm = GeneticAlgorithm()
     generation_num = 0
 
-    MAX_GENERATIONS = 600
-    FITNESS_THRESHOLD = 0.95
-    print("Generation #: " + str(generation_num) +
-          " Fittest: " + str(population.get_schedules()[0].get_fitness()))
-         # Evolve population
+    MAX_GENERATIONS = 800
+    FITNESS_THRESHOLD = 0.6
+
+    # Sort initial population
+    population.get_schedules().sort(key=lambda x: x.get_fitness(), reverse=True)
 
     # Evolution loop
-    while population.get_schedules()[0].get_fitness() < FITNESS_THRESHOLD and generation_num < MAX_GENERATIONS:
-        generation_num += 1
+    while True:
+        best_fitness = population.get_schedules()[0].get_fitness()
+
+        print("Generation:", generation_num, " Fittest:", best_fitness)  # debug
+
+        # Stop conditions
+        if best_fitness >= FITNESS_THRESHOLD:
+            break
+        if generation_num >= MAX_GENERATIONS:
+            break
+
+        # Evolve population
         population = geneticAlgorithm.evolve(population)
+
+        # Always recalculate fitness after evolution
         population.get_schedules().sort(key=lambda x: x.get_fitness(), reverse=True)
 
+        generation_num += 1
+
+    # Final best schedule
     schedule = population.get_schedules()[0].get_classes()
 
+    # Days
     days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
 
-    unique_times = list(
-        MeetingTime.objects.order_by('time').values_list("time", flat=True).distinct()
-    )
-    print("Generation #: " + str(generation_num) +
-          " Fittest: " + str(population.get_schedules()[0].get_fitness()))
+    # ---------- FIXED TIME ORDERING (IMPORTANT) ----------
+
+    # Fetch ALL slots from DB
+    raw_times = list(MeetingTime.objects.values_list("time", flat=True))
+
+    # Remove duplicates while preserving order
+    seen = set()
+    unique_times = []
+    for t in raw_times:
+        if t not in seen:
+            unique_times.append(t)
+            seen.add(t)
+
+    # Sorting based on real time, not alphabetically
+    def time_sort_key(slot):
+        start = slot.split("-")[0].strip()      # "9:30"
+        hour, minute = map(int, start.split(":"))
+
+        # Convert afternoon times (2:30, 3:30, 4:30, 5:30)
+        if hour <= 7:     # assume anything below 8 is afternoon
+            hour += 12
+
+        return hour * 60 + minute
+
+    unique_times = sorted(unique_times, key=time_sort_key)
+
     return render(request, 'gentimetable.html', {
         'schedule': schedule,
         'sections': Section.objects.all(),
