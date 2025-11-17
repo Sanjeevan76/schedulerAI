@@ -82,7 +82,7 @@ class Schedule:
 
             for course in courses:
                 for _ in range(repeat):
-                    crs_inst = course.instructors.all() #teacher
+                    crs_inst = course.instructors.all()
                     newClass = Class(self._classNumb, dept, section.section_id, course)
                     self._classNumb += 1
 
@@ -252,78 +252,72 @@ def context_manager(schedule):
     return context
 
 
+# TIMETABLE GENERATION VIEW [for students and teachers]
 
-# TIMETABLE GENERATION VIEW
+
 def timetable(request):
     population = Population(POPULATION_SIZE)
+    population.get_schedules().sort(key=lambda x: x.get_fitness(), reverse=True)
     geneticAlgorithm = GeneticAlgorithm()
     generation_num = 0
 
-    MAX_GENERATIONS = 800
-    FITNESS_THRESHOLD = 0.6
-
-    # Sort initial population
-    population.get_schedules().sort(key=lambda x: x.get_fitness(), reverse=True)
+    MAX_GENERATIONS = 600
+    FITNESS_THRESHOLD = 0.95
 
     # Evolution loop
-    while True:
-        best_fitness = population.get_schedules()[0].get_fitness()
-
-        print("Generation:", generation_num, " Fittest:", best_fitness)  # debug
-
-        # Stop conditions
-        if best_fitness >= FITNESS_THRESHOLD:
-            break
-        if generation_num >= MAX_GENERATIONS:
-            break
-
-        # Evolve population
+    while population.get_schedules()[0].get_fitness() < FITNESS_THRESHOLD and generation_num < MAX_GENERATIONS:
+        generation_num += 1
+        print("Generation #: " + str(generation_num) +
+          " Fittest: " + str(population.get_schedules()[0].get_fitness()))
         population = geneticAlgorithm.evolve(population)
-
-        # Always recalculate fitness after evolution
         population.get_schedules().sort(key=lambda x: x.get_fitness(), reverse=True)
 
-        generation_num += 1
-
-    # Final best schedule
     schedule = population.get_schedules()[0].get_classes()
 
-    # Days
     days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
 
-    # ---------- FIXED TIME ORDERING (IMPORTANT) ----------
+    unique_times = list(
+        MeetingTime.objects.order_by('time').values_list("time", flat=True).distinct()
+    )
 
-    # Fetch ALL slots from DB
-    raw_times = list(MeetingTime.objects.values_list("time", flat=True))
+    teacher_schedules = {}   
+    instructors_with_classes = [] 
 
-    # Remove duplicates while preserving order
-    seen = set()
-    unique_times = []
-    for t in raw_times:
-        if t not in seen:
-            unique_times.append(t)
-            seen.add(t)
+    instructors_lookup = {inst.pk: inst for inst in Instructor.objects.all()}
 
-    # Sorting based on real time, not alphabetically
-    def time_sort_key(slot):
-        start = slot.split("-")[0].strip()      # "9:30"
-        hour, minute = map(int, start.split(":"))
+    for cls in schedule:
+        try:
+            inst = cls.instructor 
+        except Exception:
+            inst = None
 
-        # Convert afternoon times (2:30, 3:30, 4:30, 5:30)
-        if hour <= 7:     # assume anything below 8 is afternoon
-            hour += 12
+        if inst:
+            key = inst.pk
+            if key not in teacher_schedules:
+                teacher_schedules[key] = []
+            teacher_schedules[key].append(cls)
 
-        return hour * 60 + minute
+    
+    for inst_pk in teacher_schedules.keys():
+        if inst_pk in instructors_lookup:
+            instructors_with_classes.append(instructors_lookup[inst_pk])
 
-    unique_times = sorted(unique_times, key=time_sort_key)
+    
+    print("Generation #: " + str(generation_num) +
+          " Fittest: " + str(population.get_schedules()[0].get_fitness()))
+    
+    print("genetic algorithm completed")
+    print("GENRATIONS: " + str(generation_num) +"  ||  FITTNESS: " + str(population.get_schedules()[0].get_fitness()))
+    # print("Teachers with classes:", [i.name for i in instructors_with_classes])
 
     return render(request, 'gentimetable.html', {
         'schedule': schedule,
         'sections': Section.objects.all(),
         'times': unique_times,
-        'days': days
+        'days': days,
+        'teacher_schedules': teacher_schedules,
+        'instructors': instructors_with_classes,
     })
-
 
 # BASIC PAGES
 def index(request): return render(request, 'index.html')

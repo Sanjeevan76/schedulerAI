@@ -116,6 +116,7 @@ window.onload = function () {
     </div>
 
 {% block content %}
+{# ---------------- STUDENT TIMETABLES (existing behavior) ---------------- #}
 {% for section in sections %}
 
     <h2 class="secHead">{{ section.section_id }} ({{ section.department.dept_name }})</h2>
@@ -163,6 +164,68 @@ window.onload = function () {
     </table>
 
 {% endfor %}
+
+{# ---------------- TEACHER TIMETABLES (NEW) ---------------- #}
+{% if instructors %}
+    <h1 class="text-center mt-5">Teacher Timetables</h1>
+    <div class="text-center">
+        <small>Below are the timetables for teachers showing only the classes they teach.</small>
+    </div>
+
+    {% for instructor in instructors %}
+        {# teacher_schedules uses instructor.pk as key #}
+        {% with inst_key=instructor.pk|stringformat:"s" %}
+            {% if teacher_schedules.inst_key %}
+                {# The dictionary lookup syntax above doesn't work directly in Django templates,
+                   so we'll access teacher_schedules using the key via the built-in "get" filter approach.
+                   Instead, we will try a safer access by iterating all schedule classes and filtering. #}
+            {% endif %}
+        {% endwith %}
+
+        <h2 class="secHead">{{ instructor.name }} ({{ instructor.uid }})</h2>
+
+        <table class="table2">
+            <thead>
+                <tr>
+                    <th>DAY</th>
+                    {% for time in times %}
+                        <th>{{ time }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+
+            <tbody>
+            {% for day in days %}
+                <tr>
+                    <th style="background:#e1f1f1; color:#145454;">{{ day }}</th>
+
+                    {% for time in times %}
+                        <td>
+                            {# iterate full schedule and show only classes matching this instructor/day/time #}
+                            {% for class in schedule %}
+                                {% if class.instructor and class.instructor.pk == instructor.pk %}
+                                    {% if class.meeting_time.day == day and class.meeting_time.time == time %}
+                                        <div class="class-box">
+                                            <strong>{{ class.course.course_name }}</strong><br>
+                                            Section: {{ class.section }}<br>
+                                            Room: {{ class.room.r_number }}
+                                        </div>
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endfor %}
+{% else %}
+    <div class="text-center mt-5">
+        <em>No teacher timetables to display.</em>
+    </div>
+{% endif %}
+
 {% endblock %}
 
 </div>
