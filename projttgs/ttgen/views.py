@@ -1,38 +1,37 @@
-# COde for Genetic Algorithm
-# It have : 1. Model data loading -> models.py
-#           2. Genetic Algorithm components
-#           3. Fitness Evaluation
-#           4. Django views for CRUD operations
-#           5. PDF export -> render.py
-#           6. Form submissions and rendering -> forms.py
-
-from django.http import request
 from django.shortcuts import render, redirect
 from .forms import *
 from .models import *
 from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
-from .render import Render
 from django.views.generic import View
 import random as rnd
 
+# GA PARAMETERS
+# GA PARAMETERS
+POPULATION_SIZE = 9
+NUMB_OF_ELITE_SCHEDULES = 1
+TOURNAMENT_SELECTION_SIZE = 3
+MUTATION_RATE = 0.05
 
-# GA Parameters
-POPULATION_SIZE = 9              # number of candidate timetables
-NUMB_OF_ELITE_SCHEDULES = 1      # elites carried forward without changes
-TOURNAMENT_SELECTION_SIZE = 3     # number of candidates competing in selection
-MUTATION_RATE = 0.05              # random variation rate
+LAB_DURATION = 4
+
+# Lab blocks: Morning (1–4) OR Afternoon (6–9)
+VALID_LAB_START_SLOTS = ["1", "6"]
+
+# Lunch slot (no class/lab here)
+LUNCH_SLOT = "5"
 
 
-# DATA WRAPPER — loads all DB objects needed for GA
+# ---------------- DATA WRAPPER ----------------
+
 class Data:
     def __init__(self):
-        self._rooms = Room.objects.all()
-        self._meetingTimes = MeetingTime.objects.all()
-        self._instructors = Instructor.objects.all()
-        self._courses = Course.objects.all()
-        self._depts = Department.objects.all()
+        self._rooms = list(Room.objects.all())
+        self._meetingTimes = list(MeetingTime.objects.all())
+        self._instructors = list(Instructor.objects.all())
+        self._courses = list(Course.objects.all())
+        self._depts = list(Department.objects.all())
 
     def get_rooms(self): return self._rooms
     def get_instructors(self): return self._instructors
@@ -40,179 +39,18 @@ class Data:
     def get_depts(self): return self._depts
     def get_meetingTimes(self): return self._meetingTimes
 
+    def get_lab_rooms(self):
+        return [r for r in self._rooms if r.room_type == "Lab"]
 
-# SCHEDULE CLASS — represents one complete timetable
-# _classes = list of class slots
-# _fitness = scoring of timetable quality
-# _numberOfConflicts = detected conflicts
-class Schedule:
-    def __init__(self):
-        self._data = data
-        self._classes = []
-        self._numberOfConflicts = 0
-        self._fitness = -1
-        self._classNumb = 0
-        self._isFitnessChanged = True
-
-    def get_classes(self):
-        self._isFitnessChanged = True
-        return self._classes
-
-    def get_numbOfConflicts(self):
-        return self._numberOfConflicts
-
-    def get_fitness(self):
-        if self._isFitnessChanged:
-            self._fitness = self.calculate_fitness()
-            self._isFitnessChanged = False
-        return self._fitness
-
-    # Randomly assign meeting time, room, instructor to each required class
-    def initialize(self):
-        sections = Section.objects.all()
-        for section in sections:
-            dept = section.department
-            n = section.num_class_in_week
-
-            # number of meeting slots
-            total_slots = len(MeetingTime.objects.all())
-            courses = dept.courses.all()
-
-            repeat = min(n, total_slots) // len(courses)
-
-            for course in courses:
-                for _ in range(repeat):
-                    crs_inst = course.instructors.all()
-                    newClass = Class(self._classNumb, dept, section.section_id, course)
-                    self._classNumb += 1
-
-                    newClass.set_meetingTime(
-                        data.get_meetingTimes()[rnd.randrange(0, total_slots)]
-                    )
-                    newClass.set_room(
-                        data.get_rooms()[rnd.randrange(0, len(data.get_rooms()))]
-                    )
-                    newClass.set_instructor(
-                        crs_inst[rnd.randrange(0, len(crs_inst))]
-                    )
-
-                    self._classes.append(newClass)
-
-        return self
-
-    # FITNESS FUNCTION
-    # Conflicts counted:
-    # 1. Room capacity < required
-    # 2. Room conflict (same room, same time)
-    # 3. Instructor conflict (same instructor, same time)
-    # 4. Section conflict (same section, same time)
-    # fitness = 1 / (1 + conflicts)
-    def calculate_fitness(self):
-        self._numberOfConflicts = 0
-        classes = self.get_classes()
-
-        for i in range(len(classes)):
-            # 1. Room capacity insufficient
-            try:
-                if classes[i].room.seating_capacity < int(classes[i].course.max_numb_students):
-                    self._numberOfConflicts += 1
-            except:
-                self._numberOfConflicts += 1
-
-            for j in range(i + 1, len(classes)):
-
-                same_time = classes[i].meeting_time == classes[j].meeting_time
-
-                # 2. Section conflict
-                if same_time and classes[i].section == classes[j].section:
-                    self._numberOfConflicts += 1
-
-                # 3. Room conflict
-                if same_time and classes[i].room == classes[j].room:
-                    if classes[i].section != classes[j].section:
-                        self._numberOfConflicts += 1
-
-                # 4. Instructor conflict
-                if same_time and classes[i].instructor == classes[j].instructor:
-                    self._numberOfConflicts += 1
-
-        return 1 / (1.0 * self._numberOfConflicts + 1)
+    def get_lecture_rooms(self):
+        return [r for r in self._rooms if r.room_type != "Lab"]
 
 
-# POPULATION CLASS — list of candidate timetables
-class Population:
-    def __init__(self, size):
-        self._size = size
-        self._data = data
-        self._schedules = [Schedule().initialize() for _ in range(size)]
-
-    def get_schedules(self):
-        return self._schedules
+data = None
 
 
-# GENETIC ALGORITHM
-class GeneticAlgorithm:
-    def evolve(self, population):
-        return self._mutate_population(self._crossover_population(population))
+# ---------------- CLASS & LAB OBJECTS ----------------
 
-    # CROSSOVER
-    def _crossover_population(self, pop):
-        crossover_pop = Population(0)
-
-        # Carry forward elite schedule
-        for i in range(NUMB_OF_ELITE_SCHEDULES):
-            crossover_pop.get_schedules().append(pop.get_schedules()[i])
-
-        # Produce new schedules
-        while len(crossover_pop.get_schedules()) < POPULATION_SIZE:
-            schedule1 = self._select_tournament_population(pop).get_schedules()[0]
-            schedule2 = self._select_tournament_population(pop).get_schedules()[0]
-            crossover_pop.get_schedules().append(
-                self._crossover_schedule(schedule1, schedule2)
-            )
-
-        return crossover_pop
-
-    # MUTATION
-    def _mutate_population(self, population):
-        for i in range(NUMB_OF_ELITE_SCHEDULES, POPULATION_SIZE):
-            self._mutate_schedule(population.get_schedules()[i])
-        return population
-
-    def _crossover_schedule(self, schedule1, schedule2):
-        crossoverSchedule = Schedule().initialize()
-        for i in range(len(crossoverSchedule.get_classes())):
-            crossoverSchedule.get_classes()[i] = (
-                schedule1.get_classes()[i]
-                if rnd.random() > 0.5
-                else schedule2.get_classes()[i]
-            )
-        return crossoverSchedule
-
-    def _mutate_schedule(self, mutateSchedule):
-        schedule = Schedule().initialize()
-        for i in range(len(mutateSchedule.get_classes())):
-            if rnd.random() < MUTATION_RATE:
-                mutateSchedule.get_classes()[i] = schedule.get_classes()[i]
-        return mutateSchedule
-
-    # TOURNAMENT SELECTION
-    def _select_tournament_population(self, pop):
-        tournament_pop = Population(0)
-        for _ in range(TOURNAMENT_SELECTION_SIZE):
-            tournament_pop.get_schedules().append(
-                pop.get_schedules()[rnd.randrange(POPULATION_SIZE)]
-            )
-
-        tournament_pop.get_schedules().sort(
-            key=lambda x: x.get_fitness(), reverse=True
-        )
-        return tournament_pop
-
-
-
-# CLASS OBJECT (NOT A DATABASE MODEL)
-# Represents an individual class slot
 class Class:
     def __init__(self, id, dept, section, course):
         self.section_id = id
@@ -224,109 +62,448 @@ class Class:
         self.section = section
 
     def set_instructor(self, instructor): self.instructor = instructor
-    def set_meetingTime(self, meetingTime): self.meeting_time = meetingTime
+    def set_meetingTime(self, mt): self.meeting_time = mt
     def set_room(self, room): self.room = room
 
 
-# GLOBAL DATA OBJECT
-data = Data()
+class Lab:
+    def __init__(self, id, dept, section, course):
+        self.section_id = id
+        self.department = dept
+        self.course = course
+        self.instructor = None
+        self.room = None
+        self.section = section
+        self.duration = LAB_DURATION
+        self.meeting_times = []
+
+    def set_instructor(self, instructor): self.instructor = instructor
+    def set_meetingTimes(self, mts): self.meeting_times = mts
+    def set_room(self, room): self.room = room
 
 
-# CONTEXT MANAGER — for readable output in HTML
-def context_manager(schedule):
-    classes = schedule.get_classes()
-    context = []
-    for cls in classes:
-        context.append({
-            "section": cls.section_id,
-            "dept": cls.department.dept_name,
-            "course": f"{cls.course.course_name} ({cls.course.course_number}, {cls.course.max_numb_students})",
-            "room": f"{cls.room.r_number} ({cls.room.seating_capacity})",
-            "instructor": f"{cls.instructor.name} ({cls.instructor.uid})",
-            "meeting_time": [
-                cls.meeting_time.pid,
-                cls.meeting_time.day,
-                cls.meeting_time.time
-            ]
-        })
-    return context
+# ---------------- SCHEDULE ----------------
+
+class Schedule:
+    def __init__(self):
+        self._data = data
+        self._labs = []
+        self._classes = []
+        self._fitness = -1
+        self._isFitnessChanged = True
+        self._numberOfConflicts = 0
+        self._labNumb = 0
+        self._classNumb = 0
+
+    def get_labs(self): return self._labs
+    def get_classes(self): return self._classes
+
+    def get_fitness(self):
+        if self._isFitnessChanged:
+            self._fitness = self.calculate_fitness()
+            self._isFitnessChanged = False
+        return self._fitness
+
+    # ------ get 4 consecutive slots for lab (1–4 or 6–9) ------
+    def _get_consecutive_slots(self, day, start_slot):
+        all_times = self._data.get_meetingTimes()
+        order = ["1","2","3","4","5","6","7","8","9"]
+
+        day_slots = [mt for mt in all_times if mt.day == day]
+        day_slots.sort(key=lambda mt: order.index(mt.time))
+
+        try:
+            idx = next(i for i, mt in enumerate(day_slots) if mt.time == start_slot)
+        except StopIteration:
+            return []
+
+        end = idx + LAB_DURATION - 1
+        if end >= len(day_slots):
+            return []
+
+        block = day_slots[idx:end+1]
+
+        # if any slot is lunch → invalid block
+        for mt in block:
+            if mt.time == LUNCH_SLOT:
+                return []
+
+        return block
+
+    # ------ conflict checks --------
+    def _conflicts_if_assign_lab(self, mts, room, instructor, section):
+        # Against labs
+        for lab in self._labs:
+            for mt in mts:
+                if mt in lab.meeting_times:
+                    if lab.section == section: return True
+                    if lab.room == room: return True
+                    if lab.instructor == instructor: return True
+
+        # Against classes
+        for cls in self._classes:
+            for mt in mts:
+                if (cls.meeting_time and
+                    cls.meeting_time.day == mt.day and
+                    cls.meeting_time.time == mt.time):
+                    if cls.section == section: return True
+                    if cls.room == room: return True
+                    if cls.instructor == instructor: return True
+
+        return False
+
+    def _conflicts_if_assign_class(self, mt, room, instructor, section):
+        # VS labs
+        for lab in self._labs:
+            if mt in lab.meeting_times:
+                if lab.section == section: return True
+                if lab.room == room: return True
+                if lab.instructor == instructor: return True
+
+        # VS other classes
+        for cls in self._classes:
+            if (cls.meeting_time and
+                cls.meeting_time.day == mt.day and
+                cls.meeting_time.time == mt.time):
+                if cls.section == section: return True
+                if cls.room == room: return True
+                if cls.instructor == instructor: return True
+
+        return False
+
+    # ------ initialize labs first ------
+    def initialize_labs(self):
+        sections = Section.objects.all()
+        lab_rooms = self._data.get_lab_rooms()
+        all_mt = self._data.get_meetingTimes()
+        days = sorted(list(set(mt.day for mt in all_mt)))
+
+        for section in sections:
+            dept = section.department
+            lab_courses = [c for c in dept.courses.all() if c.room_required == "Lab"]
+
+            for course in lab_courses:
+                insts = list(course.instructors.all())
+                if not insts:
+                    continue
+
+                newLab = Lab(self._labNumb, dept, section.section_id, course)
+                self._labNumb += 1
+
+                assigned = False
+                attempts = 0
+
+                while not assigned and attempts < 50:
+                    attempts += 1
+                    day = rnd.choice(days)
+                    start_slot = rnd.choice(VALID_LAB_START_SLOTS)  # "1" or "6"
+
+                    block = self._get_consecutive_slots(day, start_slot)
+                    if not block:
+                        continue
+
+                    room = rnd.choice(lab_rooms)
+                    instructor = rnd.choice(insts)
+
+                    if not self._conflicts_if_assign_lab(block, room, instructor, section.section_id):
+                        newLab.set_meetingTimes(block)
+                        newLab.set_room(room)
+                        newLab.set_instructor(instructor)
+                        assigned = True
+
+                if assigned:
+                    self._labs.append(newLab)
+
+        return self
+
+    # ------ initialize regular classes (no lunch) ------
+    def initialize_classes(self):
+        sections = Section.objects.all()
+        # Do NOT use slot 5 (lunch) for classes
+        all_mt = [mt for mt in self._data.get_meetingTimes() if mt.time != LUNCH_SLOT]
+        class_rooms = self._data.get_lecture_rooms()
+
+        for section in sections:
+            dept = section.department
+            reg_courses = [c for c in dept.courses.all() if c.room_required != "Lab"]
+            if not reg_courses:
+                continue
+
+            total = section.num_class_in_week
+            idx = 0
+
+            for _ in range(total):
+                course = reg_courses[idx % len(reg_courses)]
+                idx += 1
+                insts = list(course.instructors.all())
+                if not insts:
+                    continue
+
+                newClass = Class(self._classNumb, dept, section.section_id, course)
+                self._classNumb += 1
+
+                assigned = False
+                attempts = 0
+                while not assigned and attempts < 50:
+                    attempts += 1
+                    mt = rnd.choice(all_mt)
+                    room = rnd.choice(class_rooms)
+                    instructor = rnd.choice(insts)
+
+                    if not self._conflicts_if_assign_class(mt, room, instructor, section.section_id):
+                        newClass.set_meetingTime(mt)
+                        newClass.set_room(room)
+                        newClass.set_instructor(instructor)
+                        assigned = True
+
+                if assigned:
+                    self._classes.append(newClass)
+
+        return self
+
+    def initialize(self):
+        self.initialize_labs()
+        self.initialize_classes()
+        return self
+
+    # ------ fitness: count conflicts ------
+    def calculate_fitness(self):
+        conflicts = 0
+
+        # class ↔ class
+        for i, c1 in enumerate(self._classes):
+            for c2 in self._classes[i+1:]:
+                if c1.meeting_time and c2.meeting_time:
+                    same = (c1.meeting_time.day == c2.meeting_time.day and
+                            c1.meeting_time.time == c2.meeting_time.time)
+                    if same:
+                        if c1.section == c2.section: conflicts += 1
+                        if c1.room == c2.room: conflicts += 1
+                        if c1.instructor == c2.instructor: conflicts += 1
+
+        # lab ↔ lab
+        for i, l1 in enumerate(self._labs):
+            for l2 in self._labs[i+1:]:
+                for mt in l1.meeting_times:
+                    if mt in l2.meeting_times:
+                        if l1.section == l2.section: conflicts += 1
+                        if l1.room == l2.room: conflicts += 1
+                        if l1.instructor == l2.instructor: conflicts += 1
+
+        # lab ↔ class
+        for lab in self._labs:
+            for cls in self._classes:
+                if cls.meeting_time in lab.meeting_times:
+                    if cls.section == lab.section: conflicts += 1
+                    if cls.room == lab.room: conflicts += 1
+                    if cls.instructor == lab.instructor: conflicts += 1
+
+        self._numberOfConflicts = conflicts
+        return 1 / (1 + conflicts)
 
 
-# TIMETABLE GENERATION VIEW [for students and teachers]
+# ---------------- GA ----------------
 
+class Population:
+    def __init__(self, size):
+        self._schedules = [Schedule().initialize() for _ in range(size)]
+
+    def get_schedules(self):
+        return self._schedules
+
+
+class GeneticAlgorithm:
+    def evolve(self, pop):
+        return self._mutate_population(self._crossover_population(pop))
+
+    def _crossover_population(self, pop):
+        cp = Population(0)
+        cp.get_schedules().append(pop.get_schedules()[0])  # elite
+
+        while len(cp.get_schedules()) < POPULATION_SIZE:
+            s1 = self._tournament(pop)
+            s2 = self._tournament(pop)
+            cp.get_schedules().append(self._crossover(s1, s2))
+
+        return cp
+
+    def _mutate_population(self, pop):
+        for i in range(1, POPULATION_SIZE):
+            if rnd.random() < MUTATION_RATE:
+                pop.get_schedules()[i] = Schedule().initialize()
+        return pop
+
+    def _crossover(self, s1, s2):
+        child = Schedule().initialize()
+
+        labs_min = min(len(child.get_labs()), len(s1.get_labs()), len(s2.get_labs()))
+        for i in range(labs_min):
+            child.get_labs()[i] = s1.get_labs()[i] if rnd.random() > 0.5 else s2.get_labs()[i]
+
+        cls_min = min(len(child.get_classes()), len(s1.get_classes()), len(s2.get_classes()))
+        for i in range(cls_min):
+            child.get_classes()[i] = s1.get_classes()[i] if rnd.random() > 0.5 else s2.get_classes()[i]
+
+        return child
+
+    def _tournament(self, pop):
+        tpop = Population(0)
+        for _ in range(TOURNAMENT_SELECTION_SIZE):
+            tpop.get_schedules().append(pop.get_schedules()[rnd.randrange(POPULATION_SIZE)])
+        tpop.get_schedules().sort(key=lambda s: s.get_fitness(), reverse=True)
+        return tpop.get_schedules()[0]
+
+
+# ---------------- TIMETABLE VIEW ----------------
 
 def timetable(request):
+    global data
+    data = Data()
+
+    # --- Run GA to get best schedule ---
     population = Population(POPULATION_SIZE)
-    population.get_schedules().sort(key=lambda x: x.get_fitness(), reverse=True)
-    geneticAlgorithm = GeneticAlgorithm()
-    generation_num = 0
+    ga = GeneticAlgorithm()
 
-    MAX_GENERATIONS = 600
-    FITNESS_THRESHOLD = 0.95
+    MAX_GEN = 200
+    FITNESS_THRESHOLD = 0.90
 
-    # Evolution loop
-    while population.get_schedules()[0].get_fitness() < FITNESS_THRESHOLD and generation_num < MAX_GENERATIONS:
-        generation_num += 1
-        print("Generation #: " + str(generation_num) +
-          " Fittest: " + str(population.get_schedules()[0].get_fitness()))
-        population = geneticAlgorithm.evolve(population)
-        population.get_schedules().sort(key=lambda x: x.get_fitness(), reverse=True)
+    population.get_schedules().sort(key=lambda s: s.get_fitness(), reverse=True)
+    gen = 0
 
-    schedule = population.get_schedules()[0].get_classes()
+    while True:
+        best = population.get_schedules()[0].get_fitness()
+        print(f"Generation {gen:03d} | Best fitness = {best:.4f}")
 
+        if best >= FITNESS_THRESHOLD or gen >= MAX_GEN:
+            break
+
+        population = ga.evolve(population)
+        population.get_schedules().sort(key=lambda s: s.get_fitness(), reverse=True)
+        gen += 1
+
+    best_schedule = population.get_schedules()[0]
+
+    # ---- Time / days ----
     days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
 
-    unique_times = list(
-        MeetingTime.objects.order_by('time').values_list("time", flat=True).distinct()
-    )
+    SLOT_LABELS = {
+        "1": "8:30 - 9:30",
+        "2": "9:30 - 10:30",
+        "3": "10:30 - 11:30",
+        "4": "11:30 - 12:30",
+        "5": "12:30 - 1:30",   # Lunch
+        "6": "1:30 - 2:30",
+        "7": "2:30 - 3:30",
+        "8": "3:30 - 4:30",
+        "9": "4:30 - 5:30",
+    }
 
-    teacher_schedules = {}   
-    instructors_with_classes = [] 
+    sections = list(Section.objects.all())
+    all_labs = best_schedule.get_labs()
+    all_classes = best_schedule.get_classes()
 
-    instructors_lookup = {inst.pk: inst for inst in Instructor.objects.all()}
+    # ---------------------------
+    # Build a ready-to-render grid
+    # ---------------------------
+    # tables = [ { "section": <Section>, "rows": [ { "day": "Monday", "cells": [ {...}, ... ] }, ... ] } ]
+    tables = []
 
-    for cls in schedule:
-        try:
-            inst = cls.instructor 
-        except Exception:
-            inst = None
+    for section in sections:
+        section_rows = []
 
-        if inst:
-            key = inst.pk
-            if key not in teacher_schedules:
-                teacher_schedules[key] = []
-            teacher_schedules[key].append(cls)
+        for day in days:
+            cells = []
+            slot = 1
+            while slot <= 9:
+                # Slot 5 = lunch
+                if slot == 5:
+                    cells.append({
+                        "type": "lunch",
+                        "colspan": 1,
+                        "lab": None,
+                        "classes": [],
+                    })
+                    slot += 1
+                    continue
 
-    
-    for inst_pk in teacher_schedules.keys():
-        if inst_pk in instructors_lookup:
-            instructors_with_classes.append(instructors_lookup[inst_pk])
+                # Check if a LAB starts here (strict: only slot 1 or 6 allowed, GA already enforces)
+                lab_here = None
+                for lab in all_labs:
+                    if (
+                        lab.section == section.section_id and
+                        lab.meeting_times and
+                        lab.meeting_times[0].day == day and
+                        int(lab.meeting_times[0].time) == slot
+                    ):
+                        lab_here = lab
+                        break
 
-    
-    print("Generation #: " + str(generation_num) +
-          " Fittest: " + str(population.get_schedules()[0].get_fitness()))
-    
-    print("genetic algorithm completed")
-    print("GENRATIONS: " + str(generation_num) +"  ||  FITTNESS: " + str(population.get_schedules()[0].get_fitness()))
-    # print("Teachers with classes:", [i.name for i in instructors_with_classes])
+                if lab_here is not None:
+                    # One big 4-slot rectangle: colspan=4
+                    cells.append({
+                        "type": "lab",
+                        "colspan": 4,
+                        "lab": lab_here,
+                        "classes": [],
+                    })
+                    slot += 4
+                    continue
 
-    return render(request, 'gentimetable.html', {
-        'schedule': schedule,
-        'sections': Section.objects.all(),
-        'times': unique_times,
-        'days': days,
-        'teacher_schedules': teacher_schedules,
-        'instructors': instructors_with_classes,
+                # No lab starting here → check for classes at this slot
+                classes_here = [
+                    cls for cls in all_classes
+                    if (
+                        cls.section == section.section_id and
+                        cls.meeting_time is not None and
+                        cls.meeting_time.day == day and
+                        int(cls.meeting_time.time) == slot
+                    )
+                ]
+
+                if classes_here:
+                    cells.append({
+                        "type": "class",
+                        "colspan": 1,
+                        "lab": None,
+                        "classes": classes_here,
+                    })
+                else:
+                    cells.append({
+                        "type": "empty",
+                        "colspan": 1,
+                        "lab": None,
+                        "classes": [],
+                    })
+
+                slot += 1
+
+            section_rows.append({
+                "day": day,
+                "cells": cells,
+            })
+
+        tables.append({
+            "section": section,
+            "rows": section_rows,
+        })
+
+    return render(request, "gentimetable.html", {
+        "tables": tables,
+        "SLOT_LABELS": SLOT_LABELS,
     })
 
-# BASIC PAGES
+
+
+
+
+# BASIC NAVIGATION VIEWS
 def index(request): return render(request, 'index.html')
 def about(request): return render(request, 'aboutus.html')
 def help(request): return render(request, 'help.html')
 def terms(request): return render(request, 'terms.html')
 
 
-# CONTACT FORM EMAIL
+# CONTACT FORM
 def contact(request):
     if request.method == 'POST':
         message = request.POST['message']
@@ -346,8 +523,7 @@ def admindash(request):
     return render(request, 'admindashboard.html')
 
 
-# COURSE CRUD
-
+# CRUD VIEWS
 @login_required
 def addCourses(request):
     form = CourseForm(request.POST or None)
@@ -370,8 +546,6 @@ def delete_course(request, pk):
         Course.objects.filter(pk=pk).delete()
         return redirect('editcourse')
 
-
-# INSTRUCTOR CRUD
 
 @login_required
 def addInstructor(request):
@@ -396,9 +570,6 @@ def delete_instructor(request, pk):
         return redirect('editinstructor')
 
 
-
-# ROOM CRUD
-
 @login_required
 def addRooms(request):
     form = RoomForm(request.POST or None)
@@ -421,9 +592,6 @@ def delete_room(request, pk):
         Room.objects.filter(pk=pk).delete()
         return redirect('editrooms')
 
-
-
-# MEETING TIME CRUD
 
 @login_required
 def addTimings(request):
@@ -448,9 +616,6 @@ def delete_meeting_time(request, pk):
         return redirect('editmeetingtime')
 
 
-
-# DEPARTMENT CRUD
-
 @login_required
 def addDepts(request):
     form = DepartmentForm(request.POST or None)
@@ -473,8 +638,6 @@ def delete_department(request, pk):
         Department.objects.filter(pk=pk).delete()
         return redirect('editdepartment')
 
-
-# SECTION CRUD
 
 @login_required
 def addSections(request):
@@ -499,14 +662,11 @@ def delete_section(request, pk):
         return redirect('editsection')
 
 
-
-# SIMPLE GENERATE PAGE
 @login_required
 def generate(request):
     return render(request, 'generate.html')
 
 
-# PDF EXPORT VIEW
 class Pdf(View):
     def get(self, request):
         return Render.render('gentimetable.html', {'request': request})
